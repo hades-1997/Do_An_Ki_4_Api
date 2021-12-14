@@ -1,5 +1,6 @@
 package com.ray.videos.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "videos_rows")
+@Data
 @Getter
 @Setter
 public class VideosRows {
@@ -75,7 +77,7 @@ public class VideosRows {
     @Column(name = "click_rating")
     private int click_rating;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "catid")
     public VideosCat videosCat;
 

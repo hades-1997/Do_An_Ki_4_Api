@@ -1,5 +1,6 @@
 package com.ray.videos.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -39,7 +40,9 @@ public class VideosCat {
     @CreationTimestamp
     private Date add_time;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "videosCat", cascade = {CascadeType.ALL})
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "videosCat")
+    @JsonIgnore
     private List<VideosRows> videosRows;
 
     public VideosCat() {

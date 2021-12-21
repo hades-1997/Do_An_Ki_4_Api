@@ -4,6 +4,9 @@ public class FileConstant {
     // http://localhost:8080/api/user/image/profile/{username}  => https://robohash.org/{username}
     public static final String DEFAULT_USER_IMAGE_PATH = "/api/user/image/profile/";
 
+    // http://localhost:8080/api/videos/image/profile/{username}  => https://robohash.org/{username}
+    public static final String DEFAULT_VIDEOS_IMAGE_PATH = "/api/videos/image/profile/";
+
     // http://localhost:8080/api/user/image/{username}/{fileName.jpg} => /user/ray/springAngularEcommerce/users/{username}/{fileName.jpg}
     public static final String USER_IMAGE_PATH = "/api/user/image/";
 

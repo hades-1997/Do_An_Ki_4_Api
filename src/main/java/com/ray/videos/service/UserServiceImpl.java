@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User register(String firstName, String lastName, String username, String email) throws EmailExistException, UsernameExistException {
         validateNewUsernameAndEmail(StringUtils.EMPTY, username, email);
+
         String password = RandomStringUtils.randomAlphanumeric(10);
         String encodedPassword = bCryptPasswordEncoder.encode(password);
 
@@ -148,6 +149,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setRoles(Arrays.stream(role).map(r -> roleRepository.findByName(r)).collect(Collectors.toSet()));
         user.setAuthorities(Arrays.stream(role).map(r -> roleRepository.findByName(r))
                 .flatMap(ro -> ro.getAuthorities().stream()).collect(Collectors.toSet()));
+
         user.setProfileImageUrl(
                 // http://localhost:8080/api/user/image/profile/{username}  => https://robohash.org/{username}
                 ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_USER_IMAGE_PATH + username).toUriString()

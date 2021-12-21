@@ -80,11 +80,15 @@ public class VideosRows {
     @ManyToOne
     @JoinColumn(name = "catid")
     public VideosCat videosCat;
+    // dùng transient mình dùng thôi không lưu lên database
+    @Transient
+    public String CategoryId;
+
 
     public VideosRows() {
     }
 
-    public VideosRows(Long id, String author, String artist, int sourceid, Date add_time, int status, int archive, String title, String alias, String hometext, String vid_path, String vid_type, String vid_duration, String homeimgfile, String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating, VideosCat videosCat) {
+    public VideosRows(Long id, String author, String artist, int sourceid, Date add_time, int status, int archive, String title, String alias, String hometext, String vid_path, String vid_type, String vid_duration, String homeimgfile, String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating, VideosCat videosCat, String categoryId) {
         this.id = id;
         this.author = author;
         this.artist = artist;
@@ -106,5 +110,6 @@ public class VideosRows {
         this.total_rating = total_rating;
         this.click_rating = click_rating;
         this.videosCat = videosCat;
+        CategoryId = categoryId;
     }
 }

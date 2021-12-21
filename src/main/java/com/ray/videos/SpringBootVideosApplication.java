@@ -12,13 +12,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Properties;
 
 @SpringBootApplication
-public class SpringBootEcommerceApplication {
+public class SpringBootVideosApplication {
 
 	@Autowired
 	private Environment env;
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootEcommerceApplication.class, args);
+		SpringApplication.run(SpringBootVideosApplication.class, args);
 	}
 
 	@Bean

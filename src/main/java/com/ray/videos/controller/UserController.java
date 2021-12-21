@@ -6,10 +6,7 @@ import com.ray.videos.dao.UserRepository;
 import com.ray.videos.domain.HttpResponse;
 import com.ray.videos.domain.User;
 import com.ray.videos.domain.UserPrincipal;
-import com.ray.videos.exception.EmailExistException;
-import com.ray.videos.exception.NotAnImageFileException;
-import com.ray.videos.exception.UserNotFoundException;
-import com.ray.videos.exception.UsernameExistException;
+import com.ray.videos.exception.*;
 import com.ray.videos.service.UserService;
 import com.ray.videos.utility.JWTTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +104,7 @@ public class UserController {
                                             @RequestParam("email") String email,
                                             @RequestParam("role") Set<String> role,
                                             @RequestParam("isActive") String isActive,
-                                            @RequestParam("isActive") String isNonLocked,
+                                            @RequestParam("isNonLocked") String isNonLocked,
                                             @RequestParam(value="profileImage", required = false) MultipartFile profileImage)
             throws EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
 
@@ -124,7 +121,7 @@ public class UserController {
                                             @RequestParam("email") String email,
                                             @RequestParam("role") Set<String> role,
                                             @RequestParam("isActive") String isActive,
-                                            @RequestParam("isActive") String isNonLocked,
+                                            @RequestParam("isNonLocked") String isNonLocked,
                                             @RequestParam(value="profileImage", required = false) MultipartFile profileImage)
             throws EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
 
@@ -160,6 +157,11 @@ public class UserController {
         return response(HttpStatus.OK, "User has been deleted successfully");
     }
 
+    @GetMapping("/resetpassword/{email}")
+    public ResponseEntity<HttpResponse> resetPassword(@PathVariable("email") String email) throws EmailNotFoundException {
+        userService.resetPassword(email);
+        return response(HttpStatus.OK, "The reset password has been sent to email " + email);
+    }
 
     private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
         return new ResponseEntity<>(new HttpResponse(httpStatus.value(),

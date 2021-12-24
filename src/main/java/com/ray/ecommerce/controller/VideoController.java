@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @CrossOrigin("http://localhost:4200")
@@ -31,17 +30,11 @@ public class VideoController {
     private VideoRepository videoRepository;
 
     @Autowired
-    public VideoController(VideoService videoService, VideoCategoriesService categoriesService, VideoRepository videoRepository) {
+    public VideoController(VideoService videoService, VideoCategoriesService categoriesService, VideoRepository videoRepository, VideoRepository videoRepository1) {
         this.videoService = videoService;
         this.categoriesService = categoriesService;
         this.videoRepository = videoRepository;
     }
-
-//    @GetMapping("/list")
-//    public ResponseEntity<List<Videos>> getList(){
-//        List<Videos> videos = videoRepository.findAll();
-//        return new ResponseEntity<>(videos, HttpStatus.OK);
-//    }
 
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> getAllVideos(@RequestParam(defaultValue = "0") int page,
@@ -59,32 +52,43 @@ public class VideoController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Videos> addNewVideo(@RequestParam("author") String author,
-                                              @RequestParam("artist") String artist,
-                                              @RequestParam("sourceid") String sourceid,
-                                              @RequestParam("status") String status,
-                                              @RequestParam("archive") String archive,
-                                              @RequestParam("title") String title,
-                                              @RequestParam("alias") String alias,
-                                              @RequestParam("hometext") String hometext,
-                                              @RequestParam("vid_path") String vid_path,
-                                              @RequestParam("vid_type") String vid_type,
-                                              @RequestParam("vid_duration") String vid_duration,
-                                              @RequestParam(value="homeimgfile", required = false) MultipartFile homeimgfile,
-                                              @RequestParam("homeimgalt") String homeimgalt,
-                                              @RequestParam("allowed_comm") String allowed_comm,
-                                              @RequestParam("allowed_rating") String allowed_rating,
-                                              @RequestParam("hitstotal") String hitstotal,
-                                              @RequestParam("total_rating") String total_rating,
-                                              @RequestParam("click_rating") String click_rating,
-                                              @RequestParam("CategoryId") String CategoryId) throws IOException, NotAnImageFileException {
+    public ResponseEntity<Videos> addNewVideo(
+            @RequestParam("author") String author,
+            @RequestParam(name ="artist", required = false) String artist,
+            @RequestParam(name ="sourceid", required = false) String sourceid,
+            @RequestParam(name ="status", required = false) String status,
+            @RequestParam(name ="archive", required = false) String archive,
+            @RequestParam(name ="title", required = false) String title,
+            @RequestParam(name ="alias", required = false) String alias,
+            @RequestParam(name ="hometext", required = false) String hometext,
+            @RequestParam(name ="vid_path", required = false) String vid_path,
+            @RequestParam(name = "vid_type", required = false) String vid_type,
+            @RequestParam(name = "vid_duration", required = false) String vid_duration,
+            @RequestParam(value="homeimgfile", required = false) MultipartFile homeimgfile,
+            @RequestParam(name = "homeimgalt", required = false) String homeimgalt,
+            @RequestParam(name = "allowed_comm", required = false) String allowed_comm,
+            @RequestParam(name = "allowed_rating", required = false) String allowed_rating,
+            @RequestParam(name = "hitstotal", required = false ) String hitstotal,
+            @RequestParam(name = "total_rating", required = false ) String total_rating,
+            @RequestParam(name = "click_rating", required = false) String click_rating,
+            @RequestParam("category-id") String categoryId) throws IOException, NotAnImageFileException {
+        try {
+            Videos newVideo = videoService.addNewVideo(
+                    author,
+                    artist,
+                    Integer.parseInt(sourceid),
+                    Integer.parseInt(status),
+                    Integer.parseInt(archive),
+                    title, alias, hometext, vid_path, vid_type, vid_duration, homeimgfile,homeimgalt,allowed_comm,
+                    Integer.parseInt(allowed_rating),
+                    Integer.parseInt(hitstotal),
+                    Integer.parseInt(total_rating),
+                    Integer.parseInt(click_rating), categoryId);
 
-        Videos newVideo = videoService.addNewVideo(author,artist,
-                Integer.parseInt(sourceid), Integer.parseInt(status), Integer.parseInt(archive),
-                title, alias, hometext, vid_path, vid_type, vid_duration, homeimgfile,homeimgalt,allowed_comm,
-                Integer.parseInt(allowed_rating),
-                Integer.parseInt(hitstotal), Integer.parseInt(total_rating), Integer.parseInt(click_rating), CategoryId);
-
-        return new ResponseEntity<>(newVideo, HttpStatus.OK);
+            return new ResponseEntity<>(newVideo, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

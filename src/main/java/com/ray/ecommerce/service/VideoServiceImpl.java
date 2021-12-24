@@ -22,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Optional;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -30,13 +31,16 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 //@Qualifier("myUserDetailsService")
 public class VideoServiceImpl implements VideoService{
 
-    private Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+    private Logger LOGGER = LoggerFactory.getLogger(VideoServiceImpl.class);
+
     private VideoRepository videoRepository;
+
     private VideoCatRepository category;
 
     @Autowired
-    public VideoServiceImpl(VideoRepository videoRepository) {
+    public VideoServiceImpl(VideoRepository videoRepository,VideoCatRepository category) {
         this.videoRepository = videoRepository;
+        this.category = category;
     }
 
 
@@ -45,41 +49,47 @@ public class VideoServiceImpl implements VideoService{
                               String vid_path, String vid_type, String vid_duration, MultipartFile homeimgfile, String homeimgalt, String allowed_comm,
                               int allowed_rating, int hitstotal, int total_rating, int click_rating, String CategoryId) throws IOException, NotAnImageFileException {
 
-        Videos videos = new Videos();
-        videos.setAuthor(author);
-        videos.setArtist(artist);
-        videos.setSourceid(sourceid);
-        videos.setAdd_time(new Date());
-        videos.setStatus(status);
-        videos.setArchive(archive);
-        videos.setTitle(title);
-        videos.setAlias(alias);
-        videos.setHometext(hometext);
-        videos.setVid_path(vid_path);
-        videos.setVid_type(vid_type);
-        videos.setVid_duration(vid_duration);
-        videos.setHomeimgfile(
-                ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_VIDEO_IMAGE_PATH + title).toUriString()
-        );;
-        videos.setHomeimgalt(homeimgalt);
-        videos.setAllowed_comm(allowed_comm);
-        videos.setAllowed_rating(allowed_rating);
-        videos.setHitstotal(hitstotal);
-        videos.setTotal_rating(total_rating);
-        videos.setClick_rating(click_rating);
+
+    Videos videos = new Videos();
+    videos.setAuthor(author);
+    videos.setArtist(artist);
+    videos.setSourceid(sourceid);
+    videos.setAdd_time(new Date());
+    videos.setStatus(status);
+    videos.setArchive(archive);
+    videos.setTitle(title);
+    videos.setAlias(alias);
+    videos.setHometext(hometext);
+    videos.setVid_path(vid_path);
+    videos.setVid_type(vid_type);
+    videos.setVid_duration(vid_duration);
+    videos.setHomeimgfile(
+            ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_VIDEO_IMAGE_PATH + title).toUriString()
+    );;
+    videos.setHomeimgalt(homeimgalt);
+    videos.setAllowed_comm(allowed_comm);
+    videos.setAllowed_rating(allowed_rating);
+    videos.setHitstotal(hitstotal);
+    videos.setTotal_rating(total_rating);
+    videos.setClick_rating(click_rating);
+
 
 //        int categoryId = Integer.parseInt(theBooks.CategoryId);
 //        Category category = categoryService.getCategoryById(categoryId);
-        int catId = Integer.parseInt(videos.CategoryId);
-        VideoCategories categories = category.findVideoCategoriesById(catId);
+        Long catId = Long.parseLong(CategoryId);
+
+        VideoCategories categories = category.findById(catId).orElse(null);
+
         videos.setCategories(categories);
 //
 //        videos.setCategories(category.findVideoCategoriesById(categories));
 
-        videoRepository.save(videos);
-        saveProfileImage(videos, homeimgfile);
+       videoRepository.save(videos);
 
+        saveProfileImage(videos, homeimgfile);
+        //System.out.println("id video: " + videos.getId());
         return videos;
+
 
     }
 

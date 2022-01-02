@@ -5,11 +5,14 @@ import com.ray.ecommerce.dao.VideoCatRepository;
 import com.ray.ecommerce.dao.VideoRepository;
 import com.ray.ecommerce.entity.VideoCategories;
 import com.ray.ecommerce.entity.Videos;
+import com.ray.ecommerce.exception.EmailExistException;
 import com.ray.ecommerce.exception.NotAnImageFileException;
+import com.ray.ecommerce.exception.UsernameExistException;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +31,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Service
 @Transactional
-//@Qualifier("myUserDetailsService")
 public class VideoServiceImpl implements VideoService{
 
     private Logger LOGGER = LoggerFactory.getLogger(VideoServiceImpl.class);
@@ -72,26 +74,62 @@ public class VideoServiceImpl implements VideoService{
     videos.setHitstotal(hitstotal);
     videos.setTotal_rating(total_rating);
     videos.setClick_rating(click_rating);
-
-
-//        int categoryId = Integer.parseInt(theBooks.CategoryId);
-//        Category category = categoryService.getCategoryById(categoryId);
-        Long catId = Long.parseLong(CategoryId);
-
-        VideoCategories categories = category.findById(catId).orElse(null);
-
-        videos.setCategories(categories);
-//
-//        videos.setCategories(category.findVideoCategoriesById(categories));
-
-       videoRepository.save(videos);
-
-        saveProfileImage(videos, homeimgfile);
-        //System.out.println("id video: " + videos.getId());
-        return videos;
+    Long catId = Long.parseLong(CategoryId);
+    VideoCategories categories = category.findById(catId).orElse(null);
+    videos.setCategories(categories);
+    videoRepository.save(videos);
+    saveProfileImage(videos, homeimgfile);
+    return videos;
 
 
     }
+
+    @Override
+    public Videos updateVideo(String currentalias, String author, String artist, int sourceid, int status, int archive, String newtitle, String alias,
+                              String newhometext, String newvid_path, String newvid_type, String newvid_duration, MultipartFile homeimgfile,
+                              String newhomeimgalt, String newallowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating,
+                              String CategoryId) throws IOException, NotAnImageFileException {
+
+        Videos currentVideo = videoRepository.findByAlias(currentalias);
+        currentVideo.setAuthor(author);
+        currentVideo.setArtist(artist);
+        currentVideo.setSourceid(sourceid);
+        currentVideo.setAdd_time(new Date());
+        currentVideo.setStatus(status);
+        currentVideo.setArchive(archive);
+        currentVideo.setTitle(newtitle);
+        currentVideo.setAlias(alias);
+        currentVideo.setHometext(newhometext);
+        currentVideo.setVid_path(newvid_path);
+        currentVideo.setVid_type(newvid_type);
+        currentVideo.setVid_duration(newvid_duration);
+        currentVideo.setHomeimgfile(
+                ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_VIDEO_IMAGE_PATH + newtitle).toUriString()
+        );;
+        currentVideo.setHomeimgalt(newhomeimgalt);
+        currentVideo.setAllowed_comm(newallowed_comm);
+        currentVideo.setAllowed_rating(allowed_rating);
+        currentVideo.setHitstotal(hitstotal);
+        currentVideo.setTotal_rating(total_rating);
+        currentVideo.setClick_rating(click_rating);
+        Long catId = Long.parseLong(CategoryId);
+        VideoCategories categories = category.findById(catId).orElse(null);
+        currentVideo.setCategories(categories);
+        videoRepository.save(currentVideo);
+        saveProfileImage(currentVideo, homeimgfile);
+        System.out.println("id video: " + currentVideo.getId());
+        return currentVideo;
+       // System.out.println(currentVideo.getId());
+    }
+
+
+    @Override
+    public Videos updateProfileImage(String title, MultipartFile homeimgfile) throws EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
+        Videos videos = validateNewtitle(title);
+        saveProfileImage(videos, homeimgfile);
+        return videos;
+    }
+
 
     private void saveProfileImage(Videos videos, MultipartFile homeimgfile) throws IOException, NotAnImageFileException {
         if (homeimgfile != null) {
@@ -119,6 +157,27 @@ public class VideoServiceImpl implements VideoService{
             );
             videoRepository.save(videos);
             LOGGER.info("Save profile image: " + homeimgfile.getOriginalFilename());
+        }
+    }
+
+    private Videos validateNewtitle(String currentalias) throws UsernameExistException {
+
+        Videos newVideoBytitle = videoRepository.findByAlias(currentalias);
+
+        if (StringUtils.isNotBlank(currentalias)) {
+
+            Videos currentVideo = videoRepository.findByAlias(currentalias);
+
+            if (currentVideo == null) {
+                throw new UsernameNotFoundException("No user found by user " + currentVideo);
+            }
+
+            if (newVideoBytitle != null && !currentVideo.getId().equals(newVideoBytitle.getId())) {
+                throw new UsernameExistException("Title already exist");
+            }
+            return currentVideo;
+        }else {
+            return  null;
         }
     }
 }

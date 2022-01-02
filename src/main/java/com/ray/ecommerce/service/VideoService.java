@@ -18,4 +18,12 @@ public interface VideoService {
                        String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal,
                        int total_rating, int click_rating, String CategoryId) throws IOException, NotAnImageFileException;
 
+    Videos updateVideo(String currentalias, String author, String artist, int sourceid, int status, int archive,
+                       String newtitle, String alias, String newhometext, String newvid_path, String newvid_type,
+                       String newvid_duration, MultipartFile homeimgfile,
+                       String newhomeimgalt, String newallowed_comm, int allowed_rating, int hitstotal,
+                       int total_rating, int click_rating, String CategoryId) throws IOException, NotAnImageFileException;
+
+    Videos updateProfileImage(String title, MultipartFile homeimgfile) throws EmailExistException, UsernameExistException, IOException, NotAnImageFileException;
+
 }

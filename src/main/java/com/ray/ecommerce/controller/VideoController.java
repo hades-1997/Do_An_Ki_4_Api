@@ -1,5 +1,6 @@
 package com.ray.ecommerce.controller;
 
+import com.ray.ecommerce.constant.FileConstant;
 import com.ray.ecommerce.dao.VideoRepository;
 import com.ray.ecommerce.entity.PageInfo;
 import com.ray.ecommerce.entity.Videos;
@@ -15,9 +16,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
@@ -91,4 +99,74 @@ public class VideoController {
             return null;
         }
     }
+
+    // display profile Image
+    @GetMapping(path = "/image/{title}/{title}", produces = IMAGE_JPEG_VALUE)
+    public byte[] getProfileImage(@PathVariable("title") String title, @PathVariable("homeimgalt") String homeimgalt)
+            throws IOException {
+        // /user/ray/springAngularEcommerce2/users/
+        return Files.readAllBytes(Paths.get(FileConstant.USER_FOLDER + title + "/" + homeimgalt));
+    }
+
+    @GetMapping(path = "/image/video/{title}", produces = IMAGE_JPEG_VALUE)
+    public byte[] getTempProfileImage(@PathVariable("title") String title) throws IOException {
+        // http://localhost:8080/api/user/image/profile/{username}  => https://robohash.org/{username}
+        URL url = new URL(FileConstant.DEFAULT_VIDEO_IMAGE_PATH + title);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        try (InputStream inputStream = url.openStream()) {
+            byte[] chunk = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(chunk)) > 0) {
+                byteArrayOutputStream.write(chunk, 0, bytesRead);
+            }
+        }
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    //@PostMapping("/update")
+    @PostMapping("/update")
+    public ResponseEntity<Videos> updateVideo(
+            @RequestParam("currentalias") String currentalias,
+            @RequestParam("author") String author,
+            @RequestParam(name ="artist", required = false) String artist,
+            @RequestParam(name ="sourceid", required = false) String sourceid,
+            @RequestParam(name ="status", required = false) String status,
+            @RequestParam(name ="archive", required = false) String archive,
+            @RequestParam(name ="title", required = false) String title,
+            @RequestParam(name ="alias", required = false) String alias,
+            @RequestParam(name ="hometext", required = false) String hometext,
+            @RequestParam(name ="vid_path", required = false) String vid_path,
+            @RequestParam(name = "vid_type", required = false) String vid_type,
+            @RequestParam(name = "vid_duration", required = false) String vid_duration,
+            @RequestParam(value="homeimgfile", required = false) MultipartFile homeimgfile,
+            @RequestParam(name = "homeimgalt", required = false) String homeimgalt,
+            @RequestParam(name = "allowed_comm", required = false) String allowed_comm,
+            @RequestParam(name = "allowed_rating", required = false) String allowed_rating,
+            @RequestParam(name = "hitstotal", required = false ) String hitstotal,
+            @RequestParam(name = "total_rating", required = false ) String total_rating,
+            @RequestParam(name = "click_rating", required = false) String click_rating,
+            @RequestParam("category-id") String categoryId) throws IOException, NotAnImageFileException {
+        try {
+            Videos updateVideo = videoService.updateVideo(
+                    currentalias,
+                    author,
+                    artist,
+                    Integer.parseInt(sourceid),
+                    Integer.parseInt(status),
+                    Integer.parseInt(archive),
+                    title, alias, hometext, vid_path, vid_type, vid_duration, homeimgfile,homeimgalt,allowed_comm,
+                    Integer.parseInt(allowed_rating),
+                    Integer.parseInt(hitstotal),
+                    Integer.parseInt(total_rating),
+                    Integer.parseInt(click_rating), categoryId);
+
+            return new ResponseEntity<>(updateVideo, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 }

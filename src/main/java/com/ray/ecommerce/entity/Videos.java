@@ -1,10 +1,12 @@
 package com.ray.ecommerce.entity;
 
+import com.ray.ecommerce.domain.Authority;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "videos_rows")
@@ -78,6 +80,10 @@ public class Videos {
     // dùng transient mình dùng thôi không lưu lên database
     @Transient
     public String CategoryId;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "videos_playlist", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "video_id"))
+    private Set<VideosPlaylistCat> listCatsVideo; // delete, insert, update, delete
 
     public Videos() {
     }

@@ -26,4 +26,5 @@ public interface VideoService {
 
     Videos updateProfileImage(String title, MultipartFile homeimgfile) throws EmailExistException, UsernameExistException, IOException, NotAnImageFileException;
 
+    void deleteVideo(long id) throws UserNotFoundException, IOException;
 }

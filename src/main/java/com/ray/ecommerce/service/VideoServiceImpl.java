@@ -3,12 +3,15 @@ package com.ray.ecommerce.service;
 import com.ray.ecommerce.constant.FileConstant;
 import com.ray.ecommerce.dao.VideoCatRepository;
 import com.ray.ecommerce.dao.VideoRepository;
+import com.ray.ecommerce.domain.User;
 import com.ray.ecommerce.entity.VideoCategories;
 import com.ray.ecommerce.entity.Videos;
 import com.ray.ecommerce.exception.EmailExistException;
 import com.ray.ecommerce.exception.NotAnImageFileException;
+import com.ray.ecommerce.exception.UserNotFoundException;
 import com.ray.ecommerce.exception.UsernameExistException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -128,6 +132,17 @@ public class VideoServiceImpl implements VideoService{
         Videos videos = validateNewtitle(title);
         saveProfileImage(videos, homeimgfile);
         return videos;
+    }
+
+    @Override
+    public void deleteVideo(long id) throws UserNotFoundException, IOException {
+        if (!videoRepository.existsById(id)) {
+            throw new UserNotFoundException("User does not exist");
+        }
+        Videos videos = videoRepository.findById(id).get();
+        Path videoFolder = Paths.get(FileConstant.USER_FOLDER + videos.getTitle()).toAbsolutePath().normalize();
+        FileUtils.deleteDirectory(new File(videoFolder.toString()));
+        videoRepository.deleteById(id);
     }
 
 

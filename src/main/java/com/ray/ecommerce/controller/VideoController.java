@@ -2,9 +2,11 @@ package com.ray.ecommerce.controller;
 
 import com.ray.ecommerce.constant.FileConstant;
 import com.ray.ecommerce.dao.VideoRepository;
+import com.ray.ecommerce.domain.HttpResponse;
 import com.ray.ecommerce.entity.PageInfo;
 import com.ray.ecommerce.entity.Videos;
 import com.ray.ecommerce.exception.NotAnImageFileException;
+import com.ray.ecommerce.exception.UserNotFoundException;
 import com.ray.ecommerce.service.VideoCategoriesService;
 import com.ray.ecommerce.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,5 +170,15 @@ public class VideoController {
             return null;
         }
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpResponse> deleteVideos(@PathVariable("id") Long id) throws UserNotFoundException, IOException {
+        videoService.deleteVideo(id);
+        return response(HttpStatus.OK, "Videos has been deleted successfully");
+    }
 
+
+    private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
+        return new ResponseEntity<>(new HttpResponse(httpStatus.value(),
+                httpStatus, httpStatus.getReasonPhrase(), message), httpStatus);
+    }
 }

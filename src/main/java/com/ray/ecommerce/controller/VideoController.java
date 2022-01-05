@@ -25,6 +25,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
@@ -44,6 +45,11 @@ public class VideoController {
         this.videoService = videoService;
         this.categoriesService = categoriesService;
         this.videoRepository = videoRepository;
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<Videos>> getAllUsers() {
+        List<Videos> videos = videoRepository.findAll();
+        return new ResponseEntity<>(videos, HttpStatus.OK);
     }
 
     @GetMapping("/list")

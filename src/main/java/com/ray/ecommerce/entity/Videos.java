@@ -2,6 +2,8 @@ package com.ray.ecommerce.entity;
 
 import com.ray.ecommerce.domain.Authority;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,6 +13,8 @@ import java.util.Set;
 @Entity
 @Table(name = "videos_rows")
 @Data
+@Setter
+@Getter
 public class Videos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,14 +85,17 @@ public class Videos {
     @Transient
     public String CategoryId;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "videos_playlist", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "video_id"))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "videos_playlist",
+            joinColumns = @JoinColumn(name = "video_id"),
+            inverseJoinColumns = @JoinColumn(name = "playlist_id"))
     private Set<VideosPlaylistCat> listCatsVideo; // delete, insert, update, delete
 
     public Videos() {
     }
 
-    public Videos(String author, String artist, int sourceid, Date add_time, int status, int archive, String title, String alias, String hometext, String vid_path, String vid_type, String vid_duration, String homeimgfile, String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating, VideoCategories categories) {
+    public Videos(Long id, String author, String artist, int sourceid, Date add_time, int status, int archive, String title, String alias, String hometext, String vid_path, String vid_type, String vid_duration, String homeimgfile, String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating, VideoCategories categories, String categoryId, Set<VideosPlaylistCat> listCatsVideo) {
+        this.id = id;
         this.author = author;
         this.artist = artist;
         this.sourceid = sourceid;
@@ -109,5 +116,7 @@ public class Videos {
         this.total_rating = total_rating;
         this.click_rating = click_rating;
         this.categories = categories;
+        CategoryId = categoryId;
+        this.listCatsVideo = listCatsVideo;
     }
 }

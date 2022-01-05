@@ -61,9 +61,9 @@ public class VideosPlaylistCat {
     }
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "videos_playlist",
-            joinColumns = @JoinColumn(name = "playlist_id"),
-            inverseJoinColumns = @JoinColumn(name = "video_id"))
-    private Set<Videos> videos;
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(name = "videos_playlist",
+//            joinColumns = @JoinColumn(name = "video_id"),
+//            inverseJoinColumns = @JoinColumn(name = "playlist_id"))
+//    private Set<Videos> videos;
 }

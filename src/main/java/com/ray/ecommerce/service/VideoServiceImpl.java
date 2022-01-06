@@ -128,8 +128,8 @@ public class VideoServiceImpl implements VideoService{
 
 
     @Override
-    public Videos updateProfileImage(String title, MultipartFile homeimgfile) throws EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
-        Videos videos = validateNewtitle(title);
+    public Videos updateProfileImage(String alias, MultipartFile homeimgfile) throws EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
+        Videos videos = validateNewtitle(alias);
         saveProfileImage(videos, homeimgfile);
         return videos;
     }

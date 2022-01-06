@@ -11,7 +11,7 @@ import java.util.Set;
 @Table(name = "videos_playlist_cat")
 @Entity
 @Data
-public class VideosPlaylistCat {
+public class PlaylistCat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,9 +42,9 @@ public class VideosPlaylistCat {
     @CreationTimestamp
     private Date add_time;
 
-    public VideosPlaylistCat() {}
+    public PlaylistCat() {}
 
-    public VideosPlaylistCat(Long id, int status, int private_mode, int numbers, String title, String alias, String image, String description, int weight, String keywords, int hitstotal, int favorite, Date add_time) {
+    public PlaylistCat(Long id, int status, int private_mode, int numbers, String title, String alias, String image, String description, int weight, String keywords, int hitstotal, int favorite, Date add_time) {
         this.id = id;
         this.status = status;
         this.private_mode = private_mode;

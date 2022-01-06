@@ -1,6 +1,5 @@
 package com.ray.ecommerce.entity;
 
-import com.ray.ecommerce.domain.Authority;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -89,12 +88,12 @@ public class Videos {
     @JoinTable(name = "videos_playlist",
             joinColumns = @JoinColumn(name = "video_id"),
             inverseJoinColumns = @JoinColumn(name = "playlist_id"))
-    private Set<VideosPlaylistCat> listCatsVideo; // delete, insert, update, delete
+    private Set<PlaylistCat> listCatsVideo; // delete, insert, update, delete
 
     public Videos() {
     }
 
-    public Videos(Long id, String author, String artist, int sourceid, Date add_time, int status, int archive, String title, String alias, String hometext, String vid_path, String vid_type, String vid_duration, String homeimgfile, String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating, VideoCategories categories, String categoryId, Set<VideosPlaylistCat> listCatsVideo) {
+    public Videos(Long id, String author, String artist, int sourceid, Date add_time, int status, int archive, String title, String alias, String hometext, String vid_path, String vid_type, String vid_duration, String homeimgfile, String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating, VideoCategories categories, String categoryId, Set<PlaylistCat> listCatsVideo) {
         this.id = id;
         this.author = author;
         this.artist = artist;

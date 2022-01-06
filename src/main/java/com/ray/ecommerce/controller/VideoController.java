@@ -3,10 +3,13 @@ package com.ray.ecommerce.controller;
 import com.ray.ecommerce.constant.FileConstant;
 import com.ray.ecommerce.dao.VideoRepository;
 import com.ray.ecommerce.domain.HttpResponse;
+import com.ray.ecommerce.domain.User;
 import com.ray.ecommerce.entity.PageInfo;
 import com.ray.ecommerce.entity.Videos;
+import com.ray.ecommerce.exception.EmailExistException;
 import com.ray.ecommerce.exception.NotAnImageFileException;
 import com.ray.ecommerce.exception.UserNotFoundException;
+import com.ray.ecommerce.exception.UsernameExistException;
 import com.ray.ecommerce.service.VideoCategoriesService;
 import com.ray.ecommerce.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -182,6 +186,14 @@ public class VideoController {
         return response(HttpStatus.OK, "Videos has been deleted successfully");
     }
 
+
+    @PostMapping("/updateProfileImage")
+    public ResponseEntity<Videos> updateProfileImage(@RequestParam("homeimgfile") MultipartFile homeimgfile)
+            throws EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
+        String title = SecurityContextHolder.getContext().getAuthentication().getName();
+        Videos videos = videoService.updateProfileImage(title, homeimgfile);
+        return new ResponseEntity<>(videos, HttpStatus.OK);
+    }
 
     private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
         return new ResponseEntity<>(new HttpResponse(httpStatus.value(),

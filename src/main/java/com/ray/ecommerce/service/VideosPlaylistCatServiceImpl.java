@@ -3,11 +3,7 @@ package com.ray.ecommerce.service;
 import com.ray.ecommerce.constant.FileConstant;
 import com.ray.ecommerce.dao.VideosPlaylistCatRepository;
 import com.ray.ecommerce.entity.PlaylistCat;
-import com.ray.ecommerce.entity.Videos;
-import com.ray.ecommerce.exception.EmailExistException;
-import com.ray.ecommerce.exception.NotAnImageFileException;
-import com.ray.ecommerce.exception.UserNotFoundException;
-import com.ray.ecommerce.exception.UsernameExistException;
+import com.ray.ecommerce.exception.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
@@ -68,10 +64,9 @@ public class VideosPlaylistCatServiceImpl implements VideosPlaylistCatService{
 
     @Override
     public PlaylistCat updatePlaylist(String currentAlias, int newstatus, int newprivate_mode, int newnumbers,
-                                      String newtitle, String alias, MultipartFile image, String newdescription,
-                                      int newweight, String newkeywords, int hitstotal, int favorite) throws IOException, NotAnImageFileException {
+                                      String newtitle, String alias, MultipartFile image, String newdescription,String newkeywords) throws IOException, NotAnImageFileException {
 
-        PlaylistCat updatePlayListCat = videosPlaylistCatRepository.findByAlias(currentAlias);
+        PlaylistCat updatePlayListCat = videosPlaylistCatRepository.findPlaylistCatByAlias(currentAlias);
         updatePlayListCat.setStatus(newstatus);
         updatePlayListCat.setPrivate_mode(newprivate_mode);
         updatePlayListCat.setNumbers(newnumbers);
@@ -81,11 +76,7 @@ public class VideosPlaylistCatServiceImpl implements VideosPlaylistCatService{
                 ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_VIDEO_IMAGE_PATH + newtitle).toUriString()
         );;
         updatePlayListCat.setDescription(newdescription);
-        updatePlayListCat.setWeight(newweight);
         updatePlayListCat.setKeywords(newkeywords);
-        updatePlayListCat.setHitstotal(hitstotal);
-        updatePlayListCat.setFavorite(favorite);
-
         updatePlayListCat.setAdd_time(new Date());
         videosPlaylistCatRepository.save(updatePlayListCat);
         saveProfileImage(updatePlayListCat, image);
@@ -93,16 +84,17 @@ public class VideosPlaylistCatServiceImpl implements VideosPlaylistCatService{
     }
 
     @Override
-    public PlaylistCat updateProfileImage(String alias, MultipartFile image) throws EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
-        PlaylistCat playlistCat = validateNewAlias(alias);
+    public PlaylistCat updateProfileImage(String alias, MultipartFile image) throws IOException, NotAnImageFileException, AliasExistException {
+        PlaylistCat playlistCat = validateNewAliasPlaylist(alias, null);
         saveProfileImage(playlistCat, image);
         return playlistCat;
     }
 
+
     @Override
     public void deletePlaylist(long id) throws UserNotFoundException, IOException {
         if (!videosPlaylistCatRepository.existsById(id)) {
-            throw new UserNotFoundException("User does not exist");
+            throw new UserNotFoundException("Playlist does not exist");
         }
         PlaylistCat playlistCat = videosPlaylistCatRepository.findById(id).get();
         Path PlaylistFolder = Paths.get(FileConstant.USER_FOLDER + playlistCat.getTitle()).toAbsolutePath().normalize();
@@ -140,22 +132,22 @@ public class VideosPlaylistCatServiceImpl implements VideosPlaylistCatService{
         }
     }
 
-    private PlaylistCat validateNewAlias(String currentalias) throws UsernameExistException {
+    private PlaylistCat validateNewAliasPlaylist(String currentAlias, String newAlias) throws AliasExistException {
 
-        PlaylistCat newPlaylistByalias = videosPlaylistCatRepository.findByAlias(currentalias);
+        PlaylistCat newPlaylistByAlias = videosPlaylistCatRepository.findPlaylistCatByAlias(newAlias);
 
-        if (StringUtils.isNotBlank(currentalias)) {
+        if (StringUtils.isNotBlank(currentAlias)) {
 
-            PlaylistCat currentAlias = videosPlaylistCatRepository.findByAlias(currentalias);
+            PlaylistCat currentA = videosPlaylistCatRepository.findPlaylistCatByAlias(currentAlias);
 
-            if (currentAlias == null) {
-                throw new UsernameNotFoundException("No user found by user " + currentAlias);
+            if (currentA == null) {
+                throw new UsernameNotFoundException("No alias found by Videos " + currentAlias);
             }
 
-            if (newPlaylistByalias != null && !currentAlias.getId().equals(newPlaylistByalias.getId())) {
-                throw new UsernameExistException("Title already exist");
+            if (newPlaylistByAlias != null && !currentA.getId().equals(newPlaylistByAlias.getId())) {
+                throw new AliasExistException("Alias already exist");
             }
-            return currentAlias;
+            return currentA;
         }else {
             return  null;
         }

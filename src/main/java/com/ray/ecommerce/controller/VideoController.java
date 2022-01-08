@@ -6,10 +6,7 @@ import com.ray.ecommerce.domain.HttpResponse;
 import com.ray.ecommerce.domain.User;
 import com.ray.ecommerce.entity.PageInfo;
 import com.ray.ecommerce.entity.Videos;
-import com.ray.ecommerce.exception.EmailExistException;
-import com.ray.ecommerce.exception.NotAnImageFileException;
-import com.ray.ecommerce.exception.UserNotFoundException;
-import com.ray.ecommerce.exception.UsernameExistException;
+import com.ray.ecommerce.exception.*;
 import com.ray.ecommerce.service.VideoCategoriesService;
 import com.ray.ecommerce.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,11 +151,6 @@ public class VideoController {
             @RequestParam(name = "vid_duration", required = false) String vid_duration,
             @RequestParam(value="homeimgfile", required = false) MultipartFile homeimgfile,
             @RequestParam(name = "homeimgalt", required = false) String homeimgalt,
-            @RequestParam(name = "allowed_comm", required = false) String allowed_comm,
-            @RequestParam(name = "allowed_rating", required = false) String allowed_rating,
-            @RequestParam(name = "hitstotal", required = false ) String hitstotal,
-            @RequestParam(name = "total_rating", required = false ) String total_rating,
-            @RequestParam(name = "click_rating", required = false) String click_rating,
             @RequestParam("category-id") String categoryId) throws IOException, NotAnImageFileException {
         try {
             Videos updateVideo = videoService.updateVideo(
@@ -168,11 +160,7 @@ public class VideoController {
                     Integer.parseInt(sourceid),
                     Integer.parseInt(status),
                     Integer.parseInt(archive),
-                    title, alias, hometext, vid_path, vid_type, vid_duration, homeimgfile,homeimgalt,allowed_comm,
-                    Integer.parseInt(allowed_rating),
-                    Integer.parseInt(hitstotal),
-                    Integer.parseInt(total_rating),
-                    Integer.parseInt(click_rating), categoryId);
+                    title, alias, hometext, vid_path, vid_type, vid_duration, homeimgfile,homeimgalt, categoryId);
 
             return new ResponseEntity<>(updateVideo, HttpStatus.OK);
         } catch (Exception e) {
@@ -189,7 +177,7 @@ public class VideoController {
 
     @PostMapping("/updateProfileImage")
     public ResponseEntity<Videos> updateProfileImage(@RequestParam("homeimgfile") MultipartFile homeimgfile)
-            throws EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
+            throws EmailExistException, IOException, UsernameExistException, NotAnImageFileException, AliasExistException {
         String title = SecurityContextHolder.getContext().getAuthentication().getName();
         Videos videos = videoService.updateProfileImage(title, homeimgfile);
         return new ResponseEntity<>(videos, HttpStatus.OK);

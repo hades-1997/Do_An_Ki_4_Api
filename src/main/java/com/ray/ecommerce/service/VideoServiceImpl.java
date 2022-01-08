@@ -3,13 +3,9 @@ package com.ray.ecommerce.service;
 import com.ray.ecommerce.constant.FileConstant;
 import com.ray.ecommerce.dao.VideoCatRepository;
 import com.ray.ecommerce.dao.VideoRepository;
-import com.ray.ecommerce.domain.User;
 import com.ray.ecommerce.entity.VideoCategories;
 import com.ray.ecommerce.entity.Videos;
-import com.ray.ecommerce.exception.EmailExistException;
-import com.ray.ecommerce.exception.NotAnImageFileException;
-import com.ray.ecommerce.exception.UserNotFoundException;
-import com.ray.ecommerce.exception.UsernameExistException;
+import com.ray.ecommerce.exception.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
@@ -29,7 +25,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Optional;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -89,12 +84,11 @@ public class VideoServiceImpl implements VideoService{
     }
 
     @Override
-    public Videos updateVideo(String currentalias, String author, String artist, int sourceid, int status, int archive, String newtitle, String alias,
+    public Videos updateVideo(String currentalias, String author, String artist, int sourceid, int status, int archive, String newtitle, String newAlias,
                               String newhometext, String newvid_path, String newvid_type, String newvid_duration, MultipartFile homeimgfile,
-                              String newhomeimgalt, String newallowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating,
-                              String CategoryId) throws IOException, NotAnImageFileException {
+                              String newhomeimgalt,String CategoryId) throws IOException, NotAnImageFileException, AliasExistException {
 
-        Videos currentVideo = videoRepository.findByAlias(currentalias);
+        Videos currentVideo = validateNewAliasVideo(currentalias,newAlias);
         currentVideo.setAuthor(author);
         currentVideo.setArtist(artist);
         currentVideo.setSourceid(sourceid);
@@ -102,7 +96,7 @@ public class VideoServiceImpl implements VideoService{
         currentVideo.setStatus(status);
         currentVideo.setArchive(archive);
         currentVideo.setTitle(newtitle);
-        currentVideo.setAlias(alias);
+        currentVideo.setAlias(newAlias);
         currentVideo.setHometext(newhometext);
         currentVideo.setVid_path(newvid_path);
         currentVideo.setVid_type(newvid_type);
@@ -111,11 +105,6 @@ public class VideoServiceImpl implements VideoService{
                 ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_VIDEO_IMAGE_PATH + newtitle).toUriString()
         );;
         currentVideo.setHomeimgalt(newhomeimgalt);
-        currentVideo.setAllowed_comm(newallowed_comm);
-        currentVideo.setAllowed_rating(allowed_rating);
-        currentVideo.setHitstotal(hitstotal);
-        currentVideo.setTotal_rating(total_rating);
-        currentVideo.setClick_rating(click_rating);
         Long catId = Long.parseLong(CategoryId);
         VideoCategories categories = category.findById(catId).orElse(null);
         currentVideo.setCategories(categories);
@@ -128,8 +117,8 @@ public class VideoServiceImpl implements VideoService{
 
 
     @Override
-    public Videos updateProfileImage(String alias, MultipartFile homeimgfile) throws EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
-        Videos videos = validateNewtitle(alias);
+    public Videos updateProfileImage(String alias, MultipartFile homeimgfile) throws AliasExistException, IOException, NotAnImageFileException {
+        Videos videos = validateNewAliasVideo(alias, null);
         saveProfileImage(videos, homeimgfile);
         return videos;
     }
@@ -175,20 +164,20 @@ public class VideoServiceImpl implements VideoService{
         }
     }
 
-    private Videos validateNewtitle(String currentalias) throws UsernameExistException {
+    private Videos validateNewAliasVideo(String currentAlias, String newAlias) throws AliasExistException {
 
-        Videos newVideoBytitle = videoRepository.findByAlias(currentalias);
+        Videos newVideoByAlias = videoRepository.findByAlias(newAlias);
 
-        if (StringUtils.isNotBlank(currentalias)) {
+        if (StringUtils.isNotBlank(currentAlias)) {
 
-            Videos currentVideo = videoRepository.findByAlias(currentalias);
+            Videos currentVideo = videoRepository.findByAlias(currentAlias);
 
             if (currentVideo == null) {
-                throw new UsernameNotFoundException("No user found by user " + currentVideo);
+                throw new UsernameNotFoundException("No alias found by Videos " + currentVideo);
             }
 
-            if (newVideoBytitle != null && !currentVideo.getId().equals(newVideoBytitle.getId())) {
-                throw new UsernameExistException("Title already exist");
+            if (newVideoByAlias != null && !currentVideo.getId().equals(newVideoByAlias.getId())) {
+                throw new AliasExistException("Alias already exist");
             }
             return currentVideo;
         }else {

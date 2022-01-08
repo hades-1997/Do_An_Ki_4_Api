@@ -1,8 +1,6 @@
 package com.ray.ecommerce.config;
 
 import com.ray.ecommerce.entity.Country;
-import com.ray.ecommerce.entity.Product;
-import com.ray.ecommerce.entity.ProductCategory;
 import com.ray.ecommerce.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

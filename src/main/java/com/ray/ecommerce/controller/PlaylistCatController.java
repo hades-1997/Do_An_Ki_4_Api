@@ -5,10 +5,7 @@ import com.ray.ecommerce.domain.HttpResponse;
 import com.ray.ecommerce.entity.PageInfo;
 import com.ray.ecommerce.entity.PlaylistCat;
 import com.ray.ecommerce.entity.Videos;
-import com.ray.ecommerce.exception.EmailExistException;
-import com.ray.ecommerce.exception.NotAnImageFileException;
-import com.ray.ecommerce.exception.UserNotFoundException;
-import com.ray.ecommerce.exception.UsernameExistException;
+import com.ray.ecommerce.exception.*;
 import com.ray.ecommerce.service.VideosPlaylistCatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -88,20 +85,13 @@ public class PlaylistCatController {
             @RequestParam(name ="alias", required = false) String alias,
             @RequestParam(name ="image", required = false) MultipartFile image,
             @RequestParam(name ="description", required = false) String description,
-            @RequestParam(name ="weight", required = false) String weight,
-            @RequestParam(name ="keywords", required = false) String keywords,
-            @RequestParam(name ="hitstotal", required = false) String hitstotal,
-            @RequestParam(name ="favorite", required = false) String favorite) throws IOException, NotAnImageFileException {
+            @RequestParam(name ="keywords", required = false) String keywords) throws IOException, NotAnImageFileException {
         PlaylistCat updatePlaylist = playlistCatService.updatePlaylist(
                 currentAlias,
                 Integer.parseInt(status),
                 Integer.parseInt(private_mode),
                 Integer.parseInt(numbers),
-                title, alias, image, description,
-                Integer.parseInt(weight),
-                keywords,
-                Integer.parseInt(hitstotal),
-                Integer.parseInt(favorite)
+                title, alias, image, description,keywords
         );
         return  new ResponseEntity<>(updatePlaylist, HttpStatus.OK);
     }
@@ -114,7 +104,7 @@ public class PlaylistCatController {
 
     @PostMapping("/updateProfileImage")
     public ResponseEntity<PlaylistCat> updateProfileImage(@RequestParam("image") MultipartFile homeimgfile)
-            throws EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
+            throws EmailExistException, IOException, UsernameExistException, NotAnImageFileException, AliasExistException {
         String title = SecurityContextHolder.getContext().getAuthentication().getName();
         PlaylistCat playlistCat = playlistCatService.updateProfileImage(title, homeimgfile);
         return new ResponseEntity<>(playlistCat, HttpStatus.OK);

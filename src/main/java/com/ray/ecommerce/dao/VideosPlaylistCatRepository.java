@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public interface VideosPlaylistCatRepository extends JpaRepository<PlaylistCat, Long> {
     Page<PlaylistCat> findAll(Pageable pageable);
 
-    PlaylistCat findByAlias(String alias);
+    PlaylistCat findPlaylistCatByAlias(String alias);
 }

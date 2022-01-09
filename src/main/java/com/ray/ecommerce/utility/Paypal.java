@@ -1,7 +1,9 @@
 package com.ray.ecommerce.utility;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+@Component
 public class Paypal {
     public static String getBaseURL(HttpServletRequest request) {
         String scheme = request.getScheme();

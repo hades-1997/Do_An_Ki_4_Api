@@ -42,8 +42,6 @@ public class CheckoutServiceImpl implements CheckoutService{
 //        }
 
         // get addresses
-        order.setBillingAddress(purchase.getBillingAddress());
-        order.setShippingAddress(purchase.getShippingAddress());
 
         // get customer info
         Customer customer = purchase.getCustomer();

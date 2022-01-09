@@ -24,9 +24,6 @@ public class Order {
     @Column(name = "order_tracking_number")
     private String orderTrackingNumber;
 
-    @Column(name = "total_quantity")
-    private int totalQuantity;
-
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
@@ -47,14 +44,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "shipping_address_id", referencedColumnName = "id")
-    private Address shippingAddress;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "billing_address_id", referencedColumnName = "id")
-    private Address billingAddress;
 
     public void add(OrderItem item) {
         if (item != null) {

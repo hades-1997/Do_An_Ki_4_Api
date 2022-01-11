@@ -565,12 +565,12 @@
 	-- Constraints for table `videos_playlist`
 	--
 	ALTER TABLE `videos_playlist`
-	  ADD CONSTRAINT `videos_playlist_ibfk_1` FOREIGN KEY (`playlist_id`) REFERENCES `videos_playlist_cat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+	  ADD CONSTRAINT `videos_playlist_ibfk_1` FOREIGN KEY (`playlist_id`) REFERENCES `videos_playlist_cat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	  ADD CONSTRAINT `videos_rows_ibfk_2` FOREIGN KEY (`video_id`) REFERENCES `videos_rows` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 	--
 	-- Constraints for table `videos_rows`
 	--
 	ALTER TABLE `videos_rows`
-	  ADD CONSTRAINT `videos_rows_ibfk_1` FOREIGN KEY (`catid`) REFERENCES `videos_cat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-	  ADD CONSTRAINT `videos_rows_ibfk_2` FOREIGN KEY (`id`) REFERENCES `videos_playlist` (`video_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+	  ADD CONSTRAINT `videos_rows_ibfk_1` FOREIGN KEY (`catid`) REFERENCES `videos_cat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 	COMMIT;

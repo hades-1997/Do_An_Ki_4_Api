@@ -90,6 +90,7 @@ public class Videos {
             inverseJoinColumns = @JoinColumn(name = "playlist_id"))
     private Set<PlaylistCat> listCatsVideo; // delete, insert, update, delete
 
+
     public Videos() {
     }
 

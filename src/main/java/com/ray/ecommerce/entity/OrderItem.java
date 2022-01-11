@@ -22,8 +22,11 @@ public class OrderItem {
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
-    @Column(name = "video_id")
-    private Long videoId;
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "playlist_id")
+    private Long playlistId;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

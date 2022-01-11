@@ -16,12 +16,12 @@ import java.util.UUID;
 @Service
 public class CheckoutServiceImpl implements CheckoutService{
 
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    public CheckoutServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
+//    private CustomerRepository customerRepository;
+//
+//    @Autowired
+//    public CheckoutServiceImpl(CustomerRepository customerRepository) {
+//        this.customerRepository = customerRepository;
+//    }
 
     @Transactional
     @Override
@@ -42,13 +42,15 @@ public class CheckoutServiceImpl implements CheckoutService{
 //        }
 
         // get addresses
+        order.setBillingAddress(purchase.getBillingAddress());
+        order.setShippingAddress(purchase.getShippingAddress());
 
         // get customer info
-        Customer customer = purchase.getCustomer();
-        customer.add(order);
-
-        // save
-        customerRepository.save(customer);
+//        Customer customer = purchase.getCustomer();
+//        customer.add(order);
+//
+//        // save
+//        customerRepository.save(customer);
 
         return new PurchaseResponse(orderTrackingNumber);
     }

@@ -160,7 +160,8 @@ public class VideoController {
                     Integer.parseInt(sourceid),
                     Integer.parseInt(status),
                     Integer.parseInt(archive),
-                    title, alias, hometext, vid_path, vid_type, vid_duration, homeimgfile,homeimgalt, categoryId);
+                    title, alias, hometext, vid_path, vid_type, vid_duration, homeimgfile,homeimgalt, categoryId
+            );
 
             return new ResponseEntity<>(updateVideo, HttpStatus.OK);
         } catch (Exception e) {

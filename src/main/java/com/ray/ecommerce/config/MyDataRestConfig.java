@@ -1,6 +1,8 @@
 package com.ray.ecommerce.config;
 
 import com.ray.ecommerce.entity.State;
+import com.ray.ecommerce.entity.VideoCategories;
+import com.ray.ecommerce.entity.Videos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -29,9 +31,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
         HttpMethod[] theUnsupportedAction = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
 
-        disableHttpMethod(ProductCategory.class, config, theUnsupportedAction);
-        disableHttpMethod(Product.class, config, theUnsupportedAction);
-        disableHttpMethod(Country.class, config, theUnsupportedAction);
+        disableHttpMethod(VideoCategories.class, config, theUnsupportedAction);
+        disableHttpMethod(Videos.class, config, theUnsupportedAction);
+//        disableHttpMethod(Country.class, config, theUnsupportedAction);
         disableHttpMethod(State.class, config, theUnsupportedAction);
 
         config.exposeIdsFor(arrayOfEntities());

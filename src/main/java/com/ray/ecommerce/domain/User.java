@@ -70,15 +70,15 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Order> orders;
 
-    public void add(Order order) {
-        if (order != null) {
-            if (orders == null) {
-                orders = new ArrayList<>();
-            }
-            orders.add(order);
-            order.setUser(this);
-        }
-    }
+//    public void add(Order order) {
+//        if (order != null) {
+//            if (orders == null) {
+//                orders = new ArrayList<>();
+//            }
+//            orders.add(order);
+//            order.setUser(this);
+//        }
+//    }
 
     public User() { }
 

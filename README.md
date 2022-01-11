@@ -10,7 +10,7 @@
 	USE youtube;
 
 # Database - Orders & Customer
-		USE spring_angular_ecommerce_2;
+		USE youtube;
 
 		SET FOREIGN_KEY_CHECKS=0;
 		DROP TABLE IF EXISTS order_item;
@@ -75,6 +75,7 @@
 		) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
  
  # Database User, Role, Privilegeuse Video;
+ 	USE youtube;
 	set foreign_key_checks = 0;
 
 	drop table if exists authority;

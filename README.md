@@ -52,7 +52,7 @@
 	  `order_tracking_number` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
 	  `total_price` decimal(19,2) DEFAULT NULL,
 	  `billing_address_id` bigint(20) DEFAULT NULL,
-	  `customer_id` bigint(20) DEFAULT NULL,
+	  `user_id` int(11) DEFAULT NULL,
 	  `status` varchar(128) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
 	  `date_created` datetime(6) DEFAULT NULL,
 	  `last_updated` datetime(6) DEFAULT NULL
@@ -531,7 +531,7 @@
 	-- Constraints for table `orders`
 	--
 	ALTER TABLE `orders`
-	  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`id`) REFERENCES `order_item` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 	--

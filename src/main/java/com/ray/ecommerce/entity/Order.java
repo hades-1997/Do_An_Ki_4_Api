@@ -1,7 +1,6 @@
 package com.ray.ecommerce.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ray.ecommerce.domain.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,6 +24,9 @@ public class Order {
     @Column(name = "order_tracking_number")
     private String orderTrackingNumber;
 
+    @Column(name = "total_quantity")
+    private int totalQuantity;
+
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
@@ -43,8 +45,8 @@ public class Order {
     private List<OrderItem> orderItems;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shipping_address_id", referencedColumnName = "id")

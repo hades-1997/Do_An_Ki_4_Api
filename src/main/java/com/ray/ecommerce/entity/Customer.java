@@ -24,17 +24,17 @@ public class Customer {
 
     @Column(name = "email")
     private String email;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-    private List<Order> orders;
-
-    public void add(Order order) {
-        if (order != null) {
-            if (orders == null) {
-                orders = new ArrayList<>();
-            }
-            orders.add(order);
-            order.setCustomer(this);
-        }
-    }
+//
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+//    private List<Order> orders;
+//
+//    public void add(Order order) {
+//        if (order != null) {
+//            if (orders == null) {
+//                orders = new ArrayList<>();
+//            }
+//            orders.add(order);
+//            order.setCustomer(this);
+//        }
+//    }
 }

@@ -1,6 +1,7 @@
 package com.ray.ecommerce.service;
 
 import com.ray.ecommerce.dao.CustomerRepository;
+import com.ray.ecommerce.dao.OrderRepository;
 import com.ray.ecommerce.dto.Purchase;
 import com.ray.ecommerce.dto.PurchaseResponse;
 import com.ray.ecommerce.entity.Customer;
@@ -17,10 +18,12 @@ import java.util.UUID;
 public class CheckoutServiceImpl implements CheckoutService{
 
     private CustomerRepository customerRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    public CheckoutServiceImpl(CustomerRepository customerRepository) {
+    public CheckoutServiceImpl(CustomerRepository customerRepository, OrderRepository orderRepository) {
         this.customerRepository = customerRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Transactional
@@ -46,11 +49,11 @@ public class CheckoutServiceImpl implements CheckoutService{
         order.setShippingAddress(purchase.getShippingAddress());
 
         // get customer info
-        Customer customer = purchase.getCustomer();
-        customer.add(order);
-
+//        Customer customer = purchase.getCustomer();
+//        customer.add(order);
+        order.setUser(purchase.getUser());
         // save
-        customerRepository.save(customer);
+        orderRepository.save(order);
 
         return new PurchaseResponse(orderTrackingNumber);
     }

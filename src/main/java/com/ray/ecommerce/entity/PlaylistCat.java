@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Table(name = "videos_playlist_cat")
@@ -41,6 +42,9 @@ public class PlaylistCat {
     @Column(name = "add_time")
     @CreationTimestamp
     private Date add_time;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlistCat")
+    private List<VideosTransiction> videosTransictions;
 
     public PlaylistCat() {}
 

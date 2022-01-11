@@ -48,6 +48,10 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "playlist_id")
+//    private PlaylistCat playlistCat;
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "shipping_address_id", referencedColumnName = "id")

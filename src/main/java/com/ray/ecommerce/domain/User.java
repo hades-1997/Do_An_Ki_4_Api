@@ -2,6 +2,7 @@ package com.ray.ecommerce.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ray.ecommerce.entity.Order;
+import com.ray.ecommerce.entity.VideosTransiction;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -68,7 +69,7 @@ public class User implements Serializable {
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Order> orders;
+    private List<VideosTransiction> videosTransictions;
 
 //    public void add(Order order) {
 //        if (order != null) {

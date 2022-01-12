@@ -19,8 +19,14 @@ public class VideosTransiction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "order_tracking_number")
+    private String order_tracking_number;
+
     @Column(name = "image_url")
     private String image_url;
+
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "unit_price")
     private BigDecimal unit_price;
@@ -33,13 +39,17 @@ public class VideosTransiction {
     @JoinColumn(name = "playlist_id")
     public PlaylistCat playlistCat;
 
+
     public VideosTransiction() {
     }
 
-    public VideosTransiction(Long id, String image_url, BigDecimal unit_price, User user) {
+    public VideosTransiction(Long id, String order_tracking_number, String image_url, String title, BigDecimal unit_price, User user, PlaylistCat playlistCat) {
         this.id = id;
+        this.order_tracking_number = order_tracking_number;
         this.image_url = image_url;
+        this.title = title;
         this.unit_price = unit_price;
         this.user = user;
+        this.playlistCat = playlistCat;
     }
 }

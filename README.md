@@ -8,7 +8,17 @@
 	CREATE database youtube;
 
 	USE youtube;
-	
+	DROP TABLE IF EXISTS authority;
+	DROP TABLE IF EXISTS customer;
+	DROP TABLE IF EXISTS orders;
+	DROP TABLE IF EXISTS order_item;
+	DROP TABLE IF EXISTS role;
+	DROP TABLE IF EXISTS users;
+	DROP TABLE IF EXISTS videos_cat;
+	DROP TABLE IF EXISTS videos_playlist;
+	DROP TABLE IF EXISTS videos_rows;
+	DROP TABLE IF EXISTS videos_playlist_cat;
+	DROP TABLE IF EXISTS videos_transiction;
 	--
 	-- Table structure for table `authority`
 	--
@@ -328,6 +338,23 @@
 	--
 	-- Indexes for dumped tables
 	--
+	--
+	-- Table structure for table `videos_transiction`
+	--
+	Create table videos_transiction (
+		id int NOT NULL AUTO_INCREMENT,
+	    order_tracking_number varchar(255) DEFAULT NULL,
+	    user_id int ,
+	    image_url varchar(255) DEFAULT NULL,
+	    title varchar(250) NOT NULL DEFAULT '',
+	    unit_price decimal(13,2) DEFAULT NULL,
+	    playlist_tid int ,
+	    PRIMARY KEY (id),
+	    KEY fk_playlist (playlist_tid),
+	    KEY fk_user (user_id),
+	    CONSTRAINT fk_playlist FOREIGN KEY (playlist_tid) REFERENCES videos_playlist_cat(id),
+	    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
+	)
 
 	--
 	-- Indexes for table `authority`

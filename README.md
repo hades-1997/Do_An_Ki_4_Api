@@ -18,9 +18,9 @@
 	DROP TABLE IF EXISTS videos_rows;
 	DROP TABLE IF EXISTS videos_playlist_cat;
 	DROP TABLE IF EXISTS videos_transiction;
---
--- Table structure for table `authority`
---
+	--
+	-- Dumping data for table `authority`
+	--
 CREATE TABLE `authority` (
   `id` int(11) NOT NULL,
   `privilege` varchar(250) COLLATE utf8mb4_vietnamese_ci NOT NULL

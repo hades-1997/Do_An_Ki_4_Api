@@ -362,7 +362,25 @@ CREATE TABLE `videos_tags` (
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `keywords` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+-- --------------------------------------------------------
+	--
+	-- Table structure for table `videos_transiction`
+	--
 
+CREATE TABLE `videos_transiction` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_tracking_number` varchar(255) DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `title` varchar(250) NOT NULL DEFAULT '',
+  `unit_price` decimal(13,2) DEFAULT NULL,
+  `playlist_tid` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_playlist` (`playlist_tid`),
+  KEY `fk_user` (`user_id`),
+  CONSTRAINT `fk_playlist` FOREIGN KEY (`playlist_tid`) REFERENCES `videos_playlist_cat` (`id`),
+  CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+)
 -- --------------------------------------------------------
 
 	--

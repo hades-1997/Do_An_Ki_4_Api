@@ -43,8 +43,8 @@ public class PlaylistCat {
     @CreationTimestamp
     private Date add_time;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlistCat")
-    private List<VideosTransiction> videosTransictions;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlistCat")
+//    private List<VideosTransiction> videosTransictions;
 
     public PlaylistCat() {}
 

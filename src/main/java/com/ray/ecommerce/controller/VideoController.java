@@ -55,7 +55,7 @@ public class VideoController {
 
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> getAllVideos(@RequestParam(defaultValue = "0") int page,
-                                                            @RequestParam(defaultValue= "3") int size) {
+                                                            @RequestParam(defaultValue= "8") int size) {
         Pageable paging = PageRequest.of(page, size);
         Page<Videos> videos = videoRepository.findAll(paging);
 
@@ -66,6 +66,12 @@ public class VideoController {
         response.put("page", myPage);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{alias}")
+    public ResponseEntity<Videos> getVideoId(@PathVariable("alias") String alias) {
+        Videos videos = videoRepository.findByAlias(alias);
+        return new ResponseEntity<>(videos, HttpStatus.OK);
     }
 
     @PostMapping("/add")

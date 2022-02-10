@@ -102,7 +102,7 @@ public class VideoServiceImpl implements VideoService{
         currentVideo.setVid_type(newvid_type);
         currentVideo.setVid_duration(newvid_duration);
         currentVideo.setHomeimgfile(
-                ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_VIDEO_IMAGE_PATH + newtitle).toUriString()
+                ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_USER_IMAGE_PATH + newtitle).toUriString()
         );;
         currentVideo.setHomeimgalt(newhomeimgalt);
         Long catId = Long.parseLong(CategoryId);
@@ -126,7 +126,7 @@ public class VideoServiceImpl implements VideoService{
     @Override
     public void deleteVideo(long id) throws UserNotFoundException, IOException {
         if (!videoRepository.existsById(id)) {
-            throw new UserNotFoundException("User does not exist");
+            throw new UserNotFoundException("Videos does not exist");
         }
         Videos videos = videoRepository.findById(id).get();
         Path videoFolder = Paths.get(FileConstant.USER_FOLDER + videos.getTitle()).toAbsolutePath().normalize();

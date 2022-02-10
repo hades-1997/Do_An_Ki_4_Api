@@ -47,7 +47,7 @@ public class VideoCategoriesServiceImpl implements VideoCategoriesService{
         categories.setAlias(alias);
         categories.setDescription(description);
         categories.setImage(
-                ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_VIDEO_IMAGE_PATH + title).toUriString()
+                ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_USER_IMAGE_PATH + title).toUriString()
         );
         categories.setWeight(weight);
         categories.setAdd_time(new Date());

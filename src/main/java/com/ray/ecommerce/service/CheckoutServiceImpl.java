@@ -2,6 +2,8 @@ package com.ray.ecommerce.service;
 
 import com.ray.ecommerce.dao.CustomerRepository;
 import com.ray.ecommerce.dao.OrderRepository;
+import com.ray.ecommerce.dao.UserRepository;
+import com.ray.ecommerce.domain.User;
 import com.ray.ecommerce.dto.Purchase;
 import com.ray.ecommerce.dto.PurchaseResponse;
 import com.ray.ecommerce.entity.Customer;
@@ -19,6 +21,7 @@ public class CheckoutServiceImpl implements CheckoutService{
 
     private CustomerRepository customerRepository;
     private OrderRepository orderRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public CheckoutServiceImpl(CustomerRepository customerRepository, OrderRepository orderRepository) {
@@ -49,8 +52,9 @@ public class CheckoutServiceImpl implements CheckoutService{
 //        order.setShippingAddress(purchase.getShippingAddress());
 
         // get customer info
-//        Customer customer = purchase.getCustomer();
-//        customer.add(order);
+        User user = userRepository.findUserByEmail(purchase.getUser().getEmail());
+        user.add(order);
+
         order.setUser(purchase.getUser());
         // save
         orderRepository.save(order);

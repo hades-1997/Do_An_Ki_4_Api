@@ -3,6 +3,7 @@ package com.ray.ecommerce.service;
 import com.ray.ecommerce.constant.FileConstant;
 import com.ray.ecommerce.dao.VideoCatRepository;
 import com.ray.ecommerce.dao.VideoRepository;
+import com.ray.ecommerce.dao.VideosPlaylistCatRepository;
 import com.ray.ecommerce.entity.VideoCategories;
 import com.ray.ecommerce.entity.Videos;
 import com.ray.ecommerce.exception.*;
@@ -25,6 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -37,6 +39,7 @@ public class VideoServiceImpl implements VideoService{
     private VideoRepository videoRepository;
 
     private VideoCatRepository category;
+    private VideosPlaylistCatRepository videosPlaylistCat;
 
     @Autowired
     public VideoServiceImpl(VideoRepository videoRepository,VideoCatRepository category) {
@@ -73,10 +76,13 @@ public class VideoServiceImpl implements VideoService{
     videos.setHitstotal(hitstotal);
     videos.setTotal_rating(total_rating);
     videos.setClick_rating(click_rating);
+
     Long catId = Long.parseLong(CategoryId);
     VideoCategories categories = category.findById(catId).orElse(null);
     videos.setCategories(categories);
+
     videoRepository.save(videos);
+
     saveProfileImage(videos, homeimgfile);
     return videos;
 
@@ -108,6 +114,8 @@ public class VideoServiceImpl implements VideoService{
         Long catId = Long.parseLong(CategoryId);
         VideoCategories categories = category.findById(catId).orElse(null);
         currentVideo.setCategories(categories);
+
+
         videoRepository.save(currentVideo);
         saveProfileImage(currentVideo, homeimgfile);
         System.out.println("id video: " + currentVideo.getId());

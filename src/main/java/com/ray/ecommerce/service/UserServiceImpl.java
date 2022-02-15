@@ -149,8 +149,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setActive(isActive);
         user.setNotLocked(isNonLocked);
         user.setRoles(Arrays.stream(role).map(r -> roleRepository.findByName(r)).collect(Collectors.toSet()));
+
         user.setAuthorities(Arrays.stream(role).map(r -> roleRepository.findByName(r))
                 .flatMap(ro -> ro.getAuthorities().stream()).collect(Collectors.toSet()));
+
         user.setProfileImageUrl(
                 // http://localhost:8080/api/user/image/profile/{username}  => https://robohash.org/{username}
                 ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_USER_IMAGE_PATH + username).toUriString()

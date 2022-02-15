@@ -9,10 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -69,8 +66,8 @@ public class User implements Serializable {
     private Set<Authority> authorities; // delete, insert, update, delete
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<VideosTransiction> videosTransictions;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+//    private List<VideosTransiction> videosTransictions;
 
 //    public void add(Order order) {
 //        if (order != null) {
@@ -81,6 +78,9 @@ public class User implements Serializable {
 //            order.setUser(this);
 //        }
 //    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Order> orders;
 
     public User() { }
 
@@ -100,5 +100,15 @@ public class User implements Serializable {
         this.isNotLocked = isNotLocked;
         this.roles = roles;
         this.authorities = authorities;
+    }
+
+    public void add(Order order) {
+        if (order != null) {
+            if (orders == null) {
+                orders = new HashSet<>();
+            }
+            orders.add(order);
+            order.setUser(this);
+        }
     }
 }

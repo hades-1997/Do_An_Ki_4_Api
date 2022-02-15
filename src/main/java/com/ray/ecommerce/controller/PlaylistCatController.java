@@ -50,6 +50,12 @@ public class PlaylistCatController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("{alias}")
+    public ResponseEntity<PlaylistCat> getAlias(@PathVariable("alias") String alias){
+        PlaylistCat playlistCat = playlistCatRepository.findPlaylistCatByAlias(alias);
+        return new ResponseEntity<>(playlistCat, HttpStatus.OK);
+    }
+
     @PostMapping("/add")
     public  ResponseEntity<PlaylistCat> addNewPlayListCat(
             @RequestParam(name = "status", required = false) String status,

@@ -24,6 +24,8 @@ public class PlaylistCat {
     private int private_mode;
     @Column(name = "numbers")
     private  int numbers;
+    @Column(name = "price")
+    private double price;
     @Column(name = "title")
     private String title;
     @Column(name = "alias")
@@ -54,11 +56,12 @@ public class PlaylistCat {
 
     public PlaylistCat() {}
 
-    public PlaylistCat(Long id, int status, int private_mode, int numbers, String title, String alias, String image, String description, int weight, String keywords, int hitstotal, int favorite, Date add_time, Set<Videos> videos) {
+    public PlaylistCat(Long id, int status, int private_mode, int numbers, double price, String title, String alias, String image, String description, int weight, String keywords, int hitstotal, int favorite, Date add_time, Set<Videos> videos) {
         this.id = id;
         this.status = status;
         this.private_mode = private_mode;
         this.numbers = numbers;
+        this.price = price;
         this.title = title;
         this.alias = alias;
         this.image = image;

@@ -50,4 +50,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private ProductCategory category;
+
+    @Column(name="is_favorite")
+    private boolean isFavorite;
+
 }

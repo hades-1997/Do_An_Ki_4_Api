@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,10 +46,15 @@ public class PlaylistCat {
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlistCat")
 //    private List<VideosTransiction> videosTransictions;
+        @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+        @JoinTable(name = "videos_playlist",
+                joinColumns = { @JoinColumn(name = "playlist_id") },
+                inverseJoinColumns = {@JoinColumn(name = "video_id") })
+        private Set<Videos> videos = new HashSet<>();
 
     public PlaylistCat() {}
 
-    public PlaylistCat(Long id, int status, int private_mode, int numbers, String title, String alias, String image, String description, int weight, String keywords, int hitstotal, int favorite, Date add_time) {
+    public PlaylistCat(Long id, int status, int private_mode, int numbers, String title, String alias, String image, String description, int weight, String keywords, int hitstotal, int favorite, Date add_time, Set<Videos> videos) {
         this.id = id;
         this.status = status;
         this.private_mode = private_mode;
@@ -62,12 +68,6 @@ public class PlaylistCat {
         this.hitstotal = hitstotal;
         this.favorite = favorite;
         this.add_time = add_time;
+        this.videos = videos;
     }
-
-
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(name = "videos_playlist",
-//            joinColumns = @JoinColumn(name = "video_id"),
-//            inverseJoinColumns = @JoinColumn(name = "playlist_id"))
-//    private Set<Videos> videos;
 }

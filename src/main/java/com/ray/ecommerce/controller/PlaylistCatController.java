@@ -23,7 +23,7 @@ import java.util.Map;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping("/api/playlist")
+@RequestMapping("/api/playlistcat")
 public class PlaylistCatController {
 
     private VideosPlaylistCatService playlistCatService;

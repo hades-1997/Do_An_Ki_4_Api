@@ -84,17 +84,17 @@ public class Videos {
     @Transient
     public String CategoryId;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "videos_playlist",
-            joinColumns = @JoinColumn(name = "video_id"),
-            inverseJoinColumns = @JoinColumn(name = "playlist_id"))
-    private Set<PlaylistCat> listCatsVideo; // delete, insert, update, delete
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(name = "videos_playlist",
+//            joinColumns = { @JoinColumn(name = "video_id") },
+//            inverseJoinColumns = {@JoinColumn(name = "playlist_id") })
+//    private Set<PlaylistCat> listCatsVideo; // delete, insert, update, delete
 
 
     public Videos() {
     }
 
-    public Videos(Long id, String author, String artist, int sourceid, Date add_time, int status, int archive, String title, String alias, String hometext, String vid_path, String vid_type, String vid_duration, String homeimgfile, String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating, VideoCategories categories, String categoryId, Set<PlaylistCat> listCatsVideo) {
+    public Videos(Long id, String author, String artist, int sourceid, Date add_time, int status, int archive, String title, String alias, String hometext, String vid_path, String vid_type, String vid_duration, String homeimgfile, String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating, VideoCategories categories) {
         this.id = id;
         this.author = author;
         this.artist = artist;
@@ -116,7 +116,5 @@ public class Videos {
         this.total_rating = total_rating;
         this.click_rating = click_rating;
         this.categories = categories;
-        CategoryId = categoryId;
-        this.listCatsVideo = listCatsVideo;
     }
 }

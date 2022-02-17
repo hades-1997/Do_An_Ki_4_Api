@@ -54,6 +54,9 @@ public class PlaylistCat {
                 inverseJoinColumns = {@JoinColumn(name = "video_id") })
         private Set<Videos> videos = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "transictions")
+    private Set<Transiction> transictions;
+
     public PlaylistCat() {}
 
     public PlaylistCat(Long id, int status, int private_mode, int numbers, double price, String title, String alias, String image, String description, int weight, String keywords, int hitstotal, int favorite, Date add_time, Set<Videos> videos) {

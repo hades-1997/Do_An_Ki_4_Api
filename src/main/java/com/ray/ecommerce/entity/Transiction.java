@@ -22,11 +22,11 @@ public class Transiction {
     @Column(name = "order_tracking_number")
     private String orderTrackingNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User userPay;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playlist_tid")
     private PlaylistCat playlistCat;
 }

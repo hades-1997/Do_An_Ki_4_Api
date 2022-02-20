@@ -10,6 +10,7 @@ public interface VideoCatRepository extends JpaRepository<VideoCategories, Long>
 
     Page<VideoCategories> findAll(Pageable pageable);
 
+
     VideoCategories findVideoCategoriesByAlias(String alias);
 
     VideoCategories findVideoCategoriesByTitle(String title);

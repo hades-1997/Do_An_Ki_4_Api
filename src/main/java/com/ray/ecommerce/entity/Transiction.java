@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Set;
 
 @Entity
@@ -29,4 +30,18 @@ public class Transiction {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playlist_tid")
     private PlaylistCat playlistCat;
+
+    @Transient
+    private String urlLink;
+    public Transiction() {}
+
+    public Transiction(Long id, String orderTrackingNumber, User userPay, PlaylistCat playlistCat) {
+        this.id = id;
+        this.orderTrackingNumber = orderTrackingNumber;
+        this.userPay = userPay;
+        this.playlistCat = playlistCat;
+    }
+
+
+
 }

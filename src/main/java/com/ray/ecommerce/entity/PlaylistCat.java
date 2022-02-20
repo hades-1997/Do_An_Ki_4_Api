@@ -2,6 +2,8 @@ package com.ray.ecommerce.entity;
 
 import com.ray.ecommerce.domain.Authority;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -9,10 +11,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-@Table(name = "videos_playlist_cat")
 @Entity
+@Table(name = "videos_playlist_cat")
 @Data
+@Setter
+@Getter
 public class PlaylistCat {
 
     @Id
@@ -46,8 +49,6 @@ public class PlaylistCat {
     @CreationTimestamp
     private Date add_time;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlistCat")
-//    private List<VideosTransiction> videosTransictions;
         @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
         @JoinTable(name = "videos_playlist",
                 joinColumns = { @JoinColumn(name = "playlist_id") },
@@ -57,9 +58,10 @@ public class PlaylistCat {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlistCat")
     private Set<Transiction> transictions;
 
-    public PlaylistCat() {}
+    public PlaylistCat() {
+    }
 
-    public PlaylistCat(Long id, int status, int private_mode, int numbers, double price, String title, String alias, String image, String description, int weight, String keywords, int hitstotal, int favorite, Date add_time, Set<Videos> videos) {
+    public PlaylistCat(Long id, int status, int private_mode, int numbers, double price, String title, String alias, String image, String description, int weight, String keywords, int hitstotal, int favorite, Date add_time) {
         this.id = id;
         this.status = status;
         this.private_mode = private_mode;
@@ -74,6 +76,14 @@ public class PlaylistCat {
         this.hitstotal = hitstotal;
         this.favorite = favorite;
         this.add_time = add_time;
-        this.videos = videos;
+    }
+    public void add(Transiction transiction) {
+        if (transiction != null) {
+            if (transictions == null) {
+                transictions = new HashSet<>();
+            }
+            transictions.add(transiction);
+            transiction.setPlaylistCat(this);
+        }
     }
 }

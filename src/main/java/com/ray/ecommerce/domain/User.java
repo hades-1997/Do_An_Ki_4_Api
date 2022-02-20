@@ -1,10 +1,8 @@
 package com.ray.ecommerce.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ray.ecommerce.entity.Order;
 //import com.ray.ecommerce.entity.VideosTransiction;
 import com.ray.ecommerce.entity.Transiction;
-import com.ray.ecommerce.entity.VideosTransiction;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -66,22 +64,8 @@ public class User implements Serializable {
     @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities; // delete, insert, update, delete
 
-
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    private List<VideosTransiction> videosTransictions;
-
-//    public void add(Order order) {
-//        if (order != null) {
-//            if (orders == null) {
-//                orders = new ArrayList<>();
-//            }
-//            orders.add(order);
-//            order.setUser(this);
-//        }
-//    }
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Order> orders;
+//    private Set<Order> orders;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userPay")
     private Set<Transiction> transictions;
@@ -106,13 +90,13 @@ public class User implements Serializable {
         this.authorities = authorities;
     }
 
-    public void add(Order order) {
-        if (order != null) {
-            if (orders == null) {
-                orders = new HashSet<>();
+    public void add(Transiction transiction) {
+        if (transiction != null) {
+            if (transictions == null) {
+                transictions = new HashSet<>();
             }
-            orders.add(order);
-            order.setUser(this);
+            transictions.add(transiction);
+            transiction.setUserPay(this);
         }
     }
 }

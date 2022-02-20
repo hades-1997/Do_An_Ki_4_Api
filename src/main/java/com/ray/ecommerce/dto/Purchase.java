@@ -1,10 +1,7 @@
 package com.ray.ecommerce.dto;
 
 import com.ray.ecommerce.domain.User;
-import com.ray.ecommerce.entity.Address;
-import com.ray.ecommerce.entity.Customer;
-import com.ray.ecommerce.entity.Order;
-import com.ray.ecommerce.entity.OrderItem;
+import com.ray.ecommerce.entity.*;
 import lombok.Data;
 
 import java.util.List;
@@ -16,5 +13,7 @@ public class Purchase {
     private Address billingAddress;
     private Order order;
     private User user;
+    private Transiction transiction;
+    private PlaylistCat playlistCat;
     private List<OrderItem> orderItems;
 }

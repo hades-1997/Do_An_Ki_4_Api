@@ -67,8 +67,8 @@ public class User implements Serializable {
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 //    private Set<Order> orders;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userPay")
-    private Set<Transiction> transictions;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userPay")
+//    private Set<Transiction> tUser;
 
     public User() { }
 
@@ -90,13 +90,13 @@ public class User implements Serializable {
         this.authorities = authorities;
     }
 
-    public void add(Transiction transiction) {
-        if (transiction != null) {
-            if (transictions == null) {
-                transictions = new HashSet<>();
-            }
-            transictions.add(transiction);
-            transiction.setUserPay(this);
-        }
-    }
+//    public void add(Transiction transiction) {
+//        if (transiction != null) {
+//            if (tUser == null) {
+//                tUser = new HashSet<>();
+//            }
+//            tUser.add(transiction);
+//            transiction.setUserPay(this);
+//        }
+//    }
 }

@@ -40,11 +40,11 @@ public class CheckoutServiceImpl implements CheckoutService{
         String orderTrackingNumber = UUID.randomUUID().toString();
         transiction.setOrderTrackingNumber(orderTrackingNumber);
 //         get customer info
-        User user = userRepository.findUserByEmail(purchase.getUser().getEmail());
-        user.add(transiction);
-//         get playlistCat info
-        PlaylistCat playlistCats = playListCatRepository.findPlaylistCatByAlias(purchase.getPlaylistCat().getAlias());
-        playlistCats.add(transiction);
+//        User user = userRepository.findUserByEmail(purchase.getUser().getEmail());
+//        user.add(transiction);
+////         get playlistCat info
+//        PlaylistCat playlistCats = playListCatRepository.findPlaylistCatByAlias(purchase.getPlaylistCat().getAlias());
+//        playlistCats.add(transiction);
         //order.set
         transiction.setUserPay(purchase.getUser());
         //playlistcat.set

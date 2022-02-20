@@ -23,24 +23,26 @@ public class Transiction {
     @Column(name = "order_tracking_number")
     private String orderTrackingNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User userPay;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "playlist_tid")
     private PlaylistCat playlistCat;
 
     @Transient
     private String urlLink;
+
     public Transiction() {}
 
-    public Transiction(Long id, String orderTrackingNumber, User userPay, PlaylistCat playlistCat) {
-        this.id = id;
-        this.orderTrackingNumber = orderTrackingNumber;
-        this.userPay = userPay;
-        this.playlistCat = playlistCat;
-    }
+//    public Transiction(Long id, String orderTrackingNumber, User userPay, PlaylistCat playlistCat) {
+//        this.id = id;
+//        this.orderTrackingNumber = orderTrackingNumber;
+//        this.userPay = userPay;
+//        this.playlistCat = playlistCat;
+//
+//    }
 
 
 

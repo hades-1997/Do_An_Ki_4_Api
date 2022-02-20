@@ -12,5 +12,7 @@ public interface VideosPlaylistCatRepository extends JpaRepository<PlaylistCat, 
 
     PlaylistCat findPlaylistCatByAlias(String alias);
 
+    //PlaylistCat findPlaylistCatByAlias(String alias).wh
+
 //    PlaylistCat findById(long id);
 }

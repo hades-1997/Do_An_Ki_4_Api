@@ -55,8 +55,8 @@ public class PlaylistCat {
                 inverseJoinColumns = {@JoinColumn(name = "video_id") })
         private Set<Videos> videos = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlistCat")
-    private Set<Transiction> transictions;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlistCat")
+//    private Set<Transiction> tCourse;
 
     public PlaylistCat() {
     }
@@ -77,13 +77,13 @@ public class PlaylistCat {
         this.favorite = favorite;
         this.add_time = add_time;
     }
-    public void add(Transiction transiction) {
-        if (transiction != null) {
-            if (transictions == null) {
-                transictions = new HashSet<>();
-            }
-            transictions.add(transiction);
-            transiction.setPlaylistCat(this);
-        }
-    }
+//    public void add(Transiction transiction) {
+//        if (transiction != null) {
+//            if (tCourse == null) {
+//                tCourse = new HashSet<>();
+//            }
+//            tCourse.add(transiction);
+//            transiction.setPlaylistCat(this);
+//        }
+//    }
 }

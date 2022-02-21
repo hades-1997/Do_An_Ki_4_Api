@@ -1,6 +1,9 @@
 package com.ray.ecommerce.controller;
 
+import com.paypal.api.payments.TransactionBase;
 import com.ray.ecommerce.dao.TransictionRepository;
+import com.ray.ecommerce.domain.User;
+import com.ray.ecommerce.entity.PlaylistCat;
 import com.ray.ecommerce.entity.Transiction;
 import com.ray.ecommerce.entity.Videos;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +29,14 @@ public class TransictionController {
        Transiction transiction = transictionRepository.findTransictionById(id);
         return new ResponseEntity<>(transiction, HttpStatus.OK);
     }
+
+    //@PathVariable("userPay")
+    @GetMapping("/course")
+    public ResponseEntity<Transiction> getCourse(@PathVariable("user_id") Long user_id ,
+                                                 @PathVariable("playlist_tid") Long playlist_tid){
+
+        Transiction course = transictionRepository.findByPlaylistCatAndUserPay(playlist_tid,user_id );
+        return  new ResponseEntity<>(course, HttpStatus.OK);
+    }
+
 }

@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin("http://localhost:4200")
 public interface TransictionRepository extends JpaRepository<Transiction, Long> {
     Transiction findTransictionById(Long id);
-    Transiction findTransictionByUserPayAndPlaylistCat(User userPay, PlaylistCat playlistCat);
+    Transiction findByPlaylistCatAndUserPay(Long user_id, Long playlist_tid);
 }

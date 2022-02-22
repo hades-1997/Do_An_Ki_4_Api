@@ -12,4 +12,7 @@ public interface VideoRepository extends JpaRepository<Videos, Long> {
     Page<Videos> findAll(Pageable pageable);
 
     Videos findByAlias(String alias);
+
+    Videos findVideosById(Long id);
+
 }

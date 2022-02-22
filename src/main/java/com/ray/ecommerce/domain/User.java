@@ -2,7 +2,7 @@ package com.ray.ecommerce.domain;
 
 import com.ray.ecommerce.entity.Order;
 //import com.ray.ecommerce.entity.VideosTransiction;
-import com.ray.ecommerce.entity.Transiction;
+import com.ray.ecommerce.entity.PlaylistCat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -64,8 +64,11 @@ public class User implements Serializable {
     @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities; // delete, insert, update, delete
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    private Set<Order> orders;
+    //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    //    private Set<Order> orders;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "videos_transiction", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "playlist_tid"))
+    private Set<PlaylistCat> playlistCats;
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userPay")
 //    private Set<Transiction> tUser;

@@ -25,10 +25,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
@@ -69,11 +66,20 @@ public class VideoController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/findVideo/{Id}")
+    public ResponseEntity<Videos> getVideoDetail(@PathVariable("Id") Long Id) {
+        Optional<Videos> optinalVideos  = videoRepository.findById(Id);
+        Videos videos =  optinalVideos.get();
+        System.out.println(videos);
+        return new ResponseEntity<>(videos, HttpStatus.OK);
+    }
+
     @GetMapping("/{alias}")
     public ResponseEntity<Videos> getVideoId(@PathVariable("alias") String alias) {
         Videos videos = videoRepository.findByAlias(alias);
         return new ResponseEntity<>(videos, HttpStatus.OK);
     }
+
 
     @PostMapping("/add")
     public ResponseEntity<Videos> addNewVideo(

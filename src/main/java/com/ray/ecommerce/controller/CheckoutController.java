@@ -9,7 +9,6 @@ import com.ray.ecommerce.domain.HttpResponse;
 import com.ray.ecommerce.dto.Purchase;
 import com.ray.ecommerce.dto.PurchaseResponse;
 import com.ray.ecommerce.entity.PlaylistCat;
-import com.ray.ecommerce.entity.Transiction;
 import com.ray.ecommerce.service.CheckoutService;
 import com.ray.ecommerce.service.PaypalServiceImpl;
 import com.ray.ecommerce.utility.Paypal;
@@ -82,9 +81,7 @@ public class CheckoutController {
 //    URL_PAYPAL_SUCCESS
     @GetMapping("/pay/success")
     public String successPay( @RequestParam("paymentId") String paymentId,
-                              @RequestParam("PayerID") String payerId,
-                              @RequestParam("userPay") String userPay,
-                              @RequestParam ("playlistCat") String playlistCat){
+                              @RequestParam("PayerID") String payerId){
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if(payment.getState().equals("approved")){

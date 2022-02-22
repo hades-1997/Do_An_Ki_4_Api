@@ -13,7 +13,6 @@ public class Purchase {
     private Address billingAddress;
     private Order order;
     private User user;
-    private Transiction transiction;
     private PlaylistCat playlistCat;
     private List<OrderItem> orderItems;
 }

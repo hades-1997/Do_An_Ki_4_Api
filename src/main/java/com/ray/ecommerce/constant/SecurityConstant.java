@@ -11,5 +11,5 @@ public class SecurityConstant {
     public static final String TOKEN_CANNOT_BE_VERIFIED = "Token cannot be verified";
     public static final String[] PUBLIC_URLS = {"/api/user/login", "/api/user/register", "/api/user/image/**", "/api/user/resetpassword/**"};
     public static final String[] PUBLIC_GET_URLS = {"/api/product-category/**", "/api/products/**", "/api/states/**", "/api/countries/**",
-            "/api/videos/**","/api/categories/**","/api/playlistcat/**","/api/transiction/**","/api/checkout/**"};
+            "/api/videos/**","/api/categories/**","/api/playlistcat/**","/api/course/**","/api/checkout/**"};
 }

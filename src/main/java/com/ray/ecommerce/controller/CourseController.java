@@ -21,14 +21,6 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Course> getVideoId(@PathVariable("id") Long id) {
-//        Course course = courseRepository.findCourseById(id);
-//        return new ResponseEntity<>(course, HttpStatus.OK);
-//    }
-
-//    @PathVariable("userPay")
-
     @GetMapping("/{userId}/{playlistId}")
     public ResponseEntity<Course> getCourse(@PathVariable("userId") Long userId,
                                              @PathVariable("playlistId") Long playlistId     ){
@@ -54,6 +46,7 @@ public class CourseController {
             return null;
         }
     }
+
 
 
 }

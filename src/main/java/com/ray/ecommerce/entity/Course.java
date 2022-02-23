@@ -39,11 +39,9 @@ public class Course {
 
     public Course() {}
 
-//    public Transiction(Long id, String orderTrackingNumber, User userPay, PlaylistCat playlistCat) {
-//        this.id = id;
-//        this.orderTrackingNumber = orderTrackingNumber;
-//        this.userPay = userPay;
-//        this.playlistCat = playlistCat;
-//
-//    }
+    public Course(String orderTrackingNumber, Long userId, Long playlistId) {
+        this.orderTrackingNumber = orderTrackingNumber;
+        this.userId = userId;
+        this.playlistId = playlistId;
+    }
 }

@@ -49,6 +49,22 @@ public class PlaylistCatController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @GetMapping("/search")
+    public ResponseEntity<Map<String, Object>> getPlaylistCatFindName(@RequestParam(defaultValue = "0") int page,
+                                                                 @RequestParam(defaultValue= "3") int size,
+                                                                 @RequestParam("title") String title) {
+        Pageable paging = PageRequest.of(page, size);
+
+        Page<PlaylistCat> playlistCats = playlistCatRepository.findByTitleContaining(title,paging);
+
+        PageInfo myPage = new PageInfo(playlistCats.getNumber(), playlistCats.getTotalElements(), playlistCats.getTotalPages(), playlistCats.getSize());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("playlistCats", playlistCats);
+        response.put("page", myPage);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @GetMapping("{alias}")
     public ResponseEntity<PlaylistCat> getAlias(@PathVariable("alias") String alias){

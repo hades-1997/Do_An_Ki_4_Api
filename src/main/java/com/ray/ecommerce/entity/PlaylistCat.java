@@ -35,6 +35,8 @@ public class PlaylistCat {
     private String alias;
     @Column(name = "image")
     private String image;
+    @Column(name = "trailer")
+    private String trailer;
     @Column(name = "description")
     private String description;
     @Column(name = "weight")

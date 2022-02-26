@@ -28,7 +28,7 @@ public class RateServiceImpl implements  RateService{
         Rate rates = new Rate();
         rates.setUserId(userId);
         rates.setPlayListId(playlistId);
-        
+
         StatusPlaylist status = statusPlaylistRepository.findById(StatusId).orElse(null);;
         //StatusPlaylist
         rates.setStatusPlaylist(status);

@@ -23,11 +23,22 @@ public class Rate {
     @Column(name = "star")
     private int star;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "cat_status")
+    public StatusPlaylist statusPlaylist;
+
+    // dùng transient mình dùng thôi không lưu lên database
+    @Transient
+    public Long StatusId;
+
     public Rate() {}
 
-    public Rate(int userId, int playListId, int star) {
+    public Rate(Long id, int userId, int playListId, int star, StatusPlaylist statusPlaylist) {
+        this.id = id;
         this.userId = userId;
         this.playListId = playListId;
         this.star = star;
+        this.statusPlaylist = statusPlaylist;
     }
+
 }

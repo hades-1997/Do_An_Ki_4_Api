@@ -111,6 +111,7 @@ public class VideoServiceImpl implements VideoService{
                 ServletUriComponentsBuilder.fromCurrentContextPath().path(FileConstant.DEFAULT_USER_IMAGE_PATH + newtitle).toUriString()
         );;
         currentVideo.setHomeimgalt(newhomeimgalt);
+
         Long catId = Long.parseLong(CategoryId);
         VideoCategories categories = category.findById(catId).orElse(null);
         currentVideo.setCategories(categories);

@@ -20,25 +20,30 @@ public class Rate {
     private int userId;
     @Column(name = "playlist_id")
     private int playListId;
+    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "cat_status")
+//    public StatusPlaylist statusPlaylist;
+    @Column(name = "is_status")
+    private Boolean isStatus;
+
     @Column(name = "star")
     private int star;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cat_status")
-    public StatusPlaylist statusPlaylist;
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "cat_status")
+//    public StatusPlaylist statusPlaylist;
 
     // dùng transient mình dùng thôi không lưu lên database
-    @Transient
-    public Long StatusId;
+//    @Transient
+//    public String StatusId;
 
     public Rate() {}
 
-    public Rate(Long id, int userId, int playListId, int star, StatusPlaylist statusPlaylist) {
+    public Rate(Long id, int userId, int playListId, Boolean isStatus, int star) {
         this.id = id;
         this.userId = userId;
         this.playListId = playListId;
+        this.isStatus = isStatus;
         this.star = star;
-        this.statusPlaylist = statusPlaylist;
     }
-
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "status_playlist")
@@ -14,14 +15,14 @@ import java.util.List;
 public class StatusPlaylist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "name_status")
     private String name_status;
 
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "statusPlaylist")
-    @JsonIgnore
-    private List<Rate> rates;
+//    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "statusPlaylist")
+//    @JsonIgnore
+//    private Set<Rate> rates;
 
     public StatusPlaylist() {}
 

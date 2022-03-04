@@ -48,7 +48,8 @@ public class VideoCategories {
     public VideoCategories() {
     }
 
-    public VideoCategories(String title, String alias, String description, String image, int weight, String keywords, Date add_time, List<Videos> videosList) {
+    public VideoCategories(Long id, String title, String alias, String description, String image, int weight, String keywords, Date add_time, List<Videos> videosList) {
+        this.id = id;
         this.title = title;
         this.alias = alias;
         this.description = description;

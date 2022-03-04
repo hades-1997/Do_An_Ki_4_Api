@@ -77,7 +77,7 @@ public class Videos {
     @Column(name = "click_rating")
     private int click_rating;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "catid")
     public VideoCategories categories;
     // dùng transient mình dùng thôi không lưu lên database
@@ -94,7 +94,7 @@ public class Videos {
     public Videos() {
     }
 
-    public Videos(Long id, String author, String artist, int sourceid, Date add_time, int status, int archive, String title, String alias, String hometext, String vid_path, String vid_type, String vid_duration, String homeimgfile, String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating, VideoCategories categories) {
+    public Videos(Long id, String author, String artist, int sourceid, Date add_time, int status, int archive, String title, String alias, String hometext, String vid_path, String vid_type, String vid_duration, String homeimgfile, String homeimgalt, String allowed_comm, int allowed_rating, int hitstotal, int total_rating, int click_rating) {
         this.id = id;
         this.author = author;
         this.artist = artist;
@@ -115,6 +115,5 @@ public class Videos {
         this.hitstotal = hitstotal;
         this.total_rating = total_rating;
         this.click_rating = click_rating;
-        this.categories = categories;
     }
 }

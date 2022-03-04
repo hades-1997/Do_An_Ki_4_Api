@@ -66,6 +66,23 @@ public class VideoController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/category")
+    public ResponseEntity<Map<String, Object>> getVideoCategory(@RequestParam(defaultValue = "0") int page,
+                                                                @RequestParam(defaultValue= "8") int size,
+                                                                @RequestParam(defaultValue = "2") long categoryId){
+        Pageable paging = PageRequest.of(page, size);
+
+        Page<Videos> videos = videoRepository.findByCategoriesIdOrderByIdDesc(categoryId, paging);
+
+        PageInfo myPage = new PageInfo(videos.getNumber(), videos.getTotalElements(), videos.getTotalPages(), videos.getSize());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("videos", videos);
+        response.put("page", myPage);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/findVideo/{Id}")
     public ResponseEntity<Videos> getVideoDetail(@PathVariable("Id") Long Id) {
         Optional<Videos> optinalVideos  = videoRepository.findById(Id);

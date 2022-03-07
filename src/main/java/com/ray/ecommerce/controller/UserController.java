@@ -153,6 +153,12 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @GetMapping("/searchUser/{id}")
+    public ResponseEntity<User> getUserID(@PathVariable("id") Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(defaultValue = "0") int page,
                                                            @RequestParam(defaultValue= "3") int size) {

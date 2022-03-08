@@ -55,13 +55,15 @@ public class CourseController {
     @PostMapping("/purchase")
     public ResponseEntity<Course> addCourse(@RequestParam(value = "orderTrackingNumber", required = false) String orderTrackingNumber,
                                             @RequestParam(value = "userId", required = false ) String userId,
-                                            @RequestParam(value = "playlistId", required = false) String playlistId){
+                                            @RequestParam(value = "playlistId", required = false) String playlistId,
+                                            @RequestParam(value = "totalPrice", required = false) String totalPrice){
         try{
 
             Course addCourse = courseService.addCourse(
                     orderTrackingNumber,
                     Long.parseLong(userId),
-                    Long.parseLong(playlistId));
+                    Long.parseLong(playlistId),
+                    Double.parseDouble(totalPrice));
             return new ResponseEntity<>(addCourse, HttpStatus.OK);
 
         }catch (Exception e){

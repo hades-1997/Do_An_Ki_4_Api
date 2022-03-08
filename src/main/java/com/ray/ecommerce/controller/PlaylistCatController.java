@@ -49,6 +49,14 @@ public class PlaylistCatController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("find/{id}")
+    public ResponseEntity<PlaylistCat> getAlias(@PathVariable("id") Long id){
+        PlaylistCat playlistCat = playlistCatRepository.findById(id).orElse(null);
+        return new ResponseEntity<>(playlistCat, HttpStatus.OK);
+    }
+
+
     @GetMapping("/search")
     public ResponseEntity<Map<String, Object>> getPlaylistCatFindName(@RequestParam(defaultValue = "0") int page,
                                                                  @RequestParam(defaultValue= "3") int size,

@@ -26,22 +26,28 @@ public class Course {
     @Column(name = "playlist_tid")
     private Long playlistId;
 
+    @Column(name = "total_price")
+    private double totalPrice;
+
+
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "user_id")
-//    private User userPay;
+//    private User userPay;totalPrice
 //
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "playlist_tid")
 //    private PlaylistCat playlistCat;
-
     @Transient
     private String urlLink;
 
     public Course() {}
 
-    public Course(String orderTrackingNumber, Long userId, Long playlistId) {
+    public Course(Long id, String orderTrackingNumber, Long userId, Long playlistId, double totalPrice) {
+        this.id = id;
         this.orderTrackingNumber = orderTrackingNumber;
         this.userId = userId;
         this.playlistId = playlistId;
+        this.totalPrice = totalPrice;
     }
+
 }

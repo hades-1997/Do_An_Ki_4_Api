@@ -22,13 +22,14 @@ public class CourseServiceImpl implements  CourseService{
     }
 
     @Override
-    public Course addCourse(String orderTrackingNumber, Long userId, Long playlistId) {
+    public Course addCourse(String orderTrackingNumber, Long userId, Long playlistId, Double totalPrice) {
         //        // generate tracking number using UUID (Universally Unique Identifier) ver 4
         Course addCourse = new Course();
         orderTrackingNumber = UUID.randomUUID().toString();
         addCourse.setOrderTrackingNumber(orderTrackingNumber);
         addCourse.setUserId(userId);
         addCourse.setPlaylistId(playlistId);
+        addCourse.setTotalPrice(totalPrice);
         courseRepository.save(addCourse);
         return addCourse;
     }
